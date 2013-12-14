@@ -2,4 +2,5 @@ Day 1:
 
 07:00-10:30 : village tiles and level edit
 10:30-11:20 : village display and dialog text
-
+11:20-14:30 : basic gameplay logic and display
+14:30-15:00 : lunch
