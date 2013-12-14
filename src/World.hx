@@ -59,11 +59,33 @@ class World {
 						i.x = x * 16;
 						i.y = y * 16;
 					}
+					inline function addAnim(n, dx:Float, dy:Float, speed = 1.0) {
+						var a = new h2d.Anim(g);
+						a.frames = game.anims[n];
+						a.x = (x + dx) * 16;
+						a.y = (y + dy) * 16;
+						a.colorKey = 0x1D8700;
+						a.speed = 10 * speed;
+						a.currentFrame = Math.random() * a.frames.length;
+					}
 					var found = false;
 					for( p in bpos )
 						if( x >= p[0] && y >= p[1] && x < p[0] + p[2] && y < p[1] + p[3] ) {
-							if( x == p[4] && y == p[5] )
-								addButton(p[6], p[7], bkinds[Lambda.indexOf(bpos,p)]);
+							if( x == p[4] && y == p[5] ) {
+								var k = bkinds[Lambda.indexOf(bpos, p)];
+								addButton(p[6], p[7], k);
+								switch( k ) {
+								case BTavern:
+									addAnim(2, 3, 0);
+								case BTower:
+									addAnim(0, 0, 2);
+									addAnim(0, 1, 2);
+								case BDungeon:
+									addAnim(1, -1, 1);
+									addAnim(1, 2, 1);
+								default:
+								}
+							}
 							found = true;
 							break;
 						}
@@ -80,6 +102,14 @@ class World {
 	public function rebuild( speed = 1.0 ) {
 		for( l in [layers.get("Buildings"),layers.get("BuildingsShadows"),] ) {
 			var old = l.g;
+			var i = 0;
+			while( i < old.numChildren ) {
+				var c = old.getChildAt(i);
+				if( Std.is(c, h2d.Interactive) )
+					c.remove();
+				else
+					i++;
+			}
 			l.g = new h2d.TileGroup(tiles[0]);
 			l.g.colorKey = 0x1D8700;
 			root.addChildAt(l.g, root.getChildIndex(old));

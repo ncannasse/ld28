@@ -15,12 +15,12 @@
  </layer>
  <layer name="Ground Details 2" width="24" height="18">
   <data encoding="base64" compression="zlib">
-   eJytlOsJAjEQhMPhDwtQuQKC/7UVS0gJPgrQxk1ghWGYjXncwHB7uc2XTcheCFpHiG9OjjfeIuQne66UkyCOE/yHPV/keyfT46Ni6K+1xi9nssteLGa+V4fSnuYhazF7dfSqdZ7Ku2RfxTjeN6yfz2SlvFbhfZupX4nv21Z8766N8Lmfa/2t+KXPnpW8RN/4HXXIPgmfhUf4Sv/OrOwP/x+815+iE4/2Uqs8/se8NZ+5s+sw/+3k4RpfgrMVYg==
+   eJytlN0NwjAMhKOKBwYA1AEq3mEGNmCEjFBgAFicRPLD6XRO89OTTk1T54sT2Q1B6wzjpxPjzdcI+dGeM8VEGC8D/Jc9P+S1kenxUUtoz7XEz3dySJ5szHwvD6UjrUPWZPbyaFXtOhV3S76Leaw3zJ/vZKa4WmG9jeSvxPW2F9+rtR4+93OpvxU/99m7EBfpG78/wKfki/BVeIuP3JK27iyfD/8ffFa1T2+v9sjj/8x785k7ug/zv04c7vEHq18Xog==
   </data>
  </layer>
  <layer name="BuildingsShadows" width="24" height="18" opacity="0.45">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIOABxJ545C2wqPMi0YyhDLD5fxQMHECPh4GIF1j6h9k9mjZGAb0BAM22BY0=
+   eJxjYBgFIOABxJ545C2wqPMi0YyhDLD5fxQMHECPh4GIF1j6h9k9FNKGB8PgcOc2JLdsG2C3DGUAANLSCGI=
   </data>
  </layer>
  <layer name="Shadows" width="24" height="18" opacity="0.45">
@@ -40,7 +40,7 @@
  </layer>
  <layer name="Buildings" width="24" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYBjcIAyIw4E4ggi1ZkBsjiZWAcSVQFwFxNVY9KQBcToQZxAwOxWI3YDYHUksBIg7gLgTiLuAuJsIN9ISRAJxFI3MBvk/E4izgDiFCuZhiytqAvS4oidA9xu1/YruNxg/FYtaWJog1g1BSJgQAKUDWJogNryTkDAtQBESHgXDHwAAM6kT8g==
+   eJxjYBjcIAyIw4E4ggi1ZkBsjiZWAcSVQFwFxNVY9KQBcToQZxAwOxWI3YDYHUksBIg7gLgTiLuAuJsIN9ISRAJxFI3MBvk/E4izgDiFCuZhiytqAvS4oidA9xu1/YruNxgfFEdTgHgqkhwsTRDrhiAkjA0sAeKlUDYoHcDSBLHhnYSEsYEtQLyVCHNwgSIkjA0cAeKjRJq1HYh3UOAWfOAYEB8H4hNQ9iggDwAA+pcd4A==
   </data>
  </layer>
 </map>

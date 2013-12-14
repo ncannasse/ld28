@@ -9,6 +9,7 @@ class Game extends hxd.App {
 	public var buildings : Map<BuildingKind,Building>;
 	public var curDialog : h2d.Sprite;
 	public var inventory : Array<Bool>;
+	var anims : Array<Array<h2d.Tile>>;
 	var items : Array<h2d.Tile>;
 	var invSpr : h2d.Sprite;
 	var updates : Array < { function update(dt:Float) : Void; }>;
@@ -18,13 +19,18 @@ class Game extends hxd.App {
 		scene = s2d;
 		updates = [];
 		buildings = new Map();
-		s2d.setFixedSize(Const.W, Const.H + 8);
+		s2d.setFixedSize(Const.W, Const.H + 12);
 		world = new World(Res.map, Res.tiles);
 		s2d.add(world.root, 0);
 		font = Res.Minecraftia.build(8, { antiAliasing : false } );
 		
+		var atile = Res.sprites.toTile();
+		anims = [];
+		for( frames in [5,5,5] )
+			anims.push([for( i in 0...frames ) atile.sub(i * 16, anims.length * 16, 16, 16)]);
+		
 		var itemsTile = Res.items.toTile();
-		items = [for( i in 0...16 ) itemsTile.sub(i * 8, 0, 8, 8)];
+		items = [for( i in 0...16 ) itemsTile.sub(i * 10, 0, 10, 10)];
 		
 		inventory = [true];
 		updateInventory();
@@ -44,10 +50,17 @@ class Game extends hxd.App {
 		iall.onMove = function(e) { e.cancel = true; e.propagate = true; }
 		s2d.add(iall, 2);
 		*/
-		
-//		dialog(Texts.WELCOME, function() {
+
+		/*
+		dialog(Texts.WELCOME, function() {
 			unlockBuilding(BFarmer);
-//		});
+		});
+		*/
+		
+		inventory = [true, true, true, true, true];
+		updateInventory();
+		for( b in BuildingKind.createAll() )
+			unlockBuilding(b);
 		
 		world.onClickBuilding = function(b) {
 			buildings.get(b).click();
@@ -58,21 +71,20 @@ class Game extends hxd.App {
 		if( invSpr != null ) invSpr.remove();
 		invSpr = new h2d.Sprite();
 		invSpr.y = Const.H;
-		new h2d.Bitmap(h2d.Tile.fromColor(0xFF000000,Const.W,8), invSpr);
+		new h2d.Bitmap(h2d.Tile.fromColor(0xFF000000,Const.W,12), invSpr);
 		s2d.add(invSpr, 2);
-		var items = Res.items.toTile();
 		var tip = new h2d.Text(font, invSpr);
 		tip.visible = false;
 		tip.y = -12;
 		tip.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
 		for( i in 0...inventory.length ) {
 			if( !inventory[i] ) continue;
-			var s = new h2d.Bitmap(items.sub(i * 8, 0, 8, 8), invSpr);
-			s.x = i * 8;
-			var int = new h2d.Interactive(8, 8, invSpr);
-			int.x = i * 8;
+			var s = new h2d.Bitmap(items[i], invSpr);
+			s.x = i * 12;
+			s.y = 1;
+			var int = new h2d.Interactive(8, 8, s);
 			int.onOver = function(_) {
-				tip.x = i * 8 + 2;
+				tip.x = s.x + 2;
 				tip.text = Texts.ITEMNAME(Item.createAll()[i]);
 				tip.visible = true;
 			};
@@ -113,30 +125,30 @@ class Game extends hxd.App {
 	function announce( t : String, ?icon : Item, ?color : Int ) {
 		var tf = new h2d.Text(font);
 		tf.text = t;
-		var size =  tf.textWidth + 2 + (icon == null ? 0 : 10);
+		var size =  tf.textWidth + 2 + (icon == null ? 0 : 11);
 		var a = new h2d.Sprite();
 		a.x = Const.W - size;
 		a.addChild(tf);
 		tf.x = 1;
-		tf.y = -2;
+		tf.y = -1;
 		if( color != null )
 			tf.textColor = color;
 		if( icon != null ) {
 			var ic = new h2d.Bitmap(items[icon.getIndex()], a);
-			ic.x = 1;
-			ic.y = 1;
-			tf.x += 10;
+			ic.x = 0;
+			ic.y = 0;
+			tf.x += 11;
 		}
 		s2d.add(a, 3);
-		a.y = Const.H + 8;
+		a.y = Const.H + 10;
 		var py = 0.;
 		var s = -1;
 		var w = 0.;
 		var u = new Update();
 		u.update = function(dt) {
 			py += s * dt;
-			if( py < -9 ) {
-				py = -9;
+			if( py < -10 ) {
+				py = -10;
 				w += dt;
 				if( w > 120 ) s *= -1;
 			}
@@ -144,7 +156,7 @@ class Game extends hxd.App {
 				a.remove();
 				u.stop();
 			}
-			a.y = Const.H + 8 + Std.int(py);
+			a.y = Const.H + 10 + Std.int(py);
 		};
 		if( curAnnounce != null ) curAnnounce.remove();
 		curAnnounce = a;
@@ -160,6 +172,8 @@ class Game extends hxd.App {
 		case BFarmer: new b.Farmer();
 		case BWheat: new b.Wheat();
 		case BTavern: new b.Tavern();
+		case BTower: new b.Tower();
+		case BDungeon: new b.Dungeon();
 		}
 		buildings.set(b.kind, b);
 		world.rebuild();

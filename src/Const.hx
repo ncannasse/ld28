@@ -2,12 +2,16 @@ enum BuildingKind {
 	BFarmer;
 	BWheat;
 	BTavern;
+	BTower;
+	BDungeon;
 }
 
 enum Item {
 	Seed;
 	Wheat;
 	Beer;
+	Soldier;
+	Gold;
 }
 
 class Const {

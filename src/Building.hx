@@ -24,6 +24,14 @@ class Building {
 		return [];
 	}
 	
+	function unlock(b) {
+		game.unlockBuilding(b);
+	}
+	
+	function getTexts() {
+		return ["NO INTRO", "NO TEXT"];
+	}
+	
 	function start(time, callb ) {
 		if( pending != null ) throw "assert";
 		
@@ -77,9 +85,9 @@ class Building {
 			if( a.item != null ) {
 				var ico = new h2d.Bitmap(game.items[a.item.getIndex()], spr);
 				ico.colorKey = 0;
-				ico.x = 6;
-				ico.y = 6;
-				px += 8;
+				ico.x = 5;
+				ico.y = 5;
+				px += 9;
 			}
 			var tf = new h2d.Text(game.font, spr);
 			tf.text = a.text;
@@ -106,12 +114,21 @@ class Building {
 			return spr;
 		}
 		var dimg = new Dialog(50, 50, "");
+		var index = kind.getIndex();
+		var pt = Res.portraits.toTile();
+		var p = new h2d.Anim(dimg);
+		p.frames = [pt.sub(0, index * 16, 16, 16), pt.sub(16, index * 16, 16, 16)];
+		p.scale(2);
+		p.x = 8;
+		p.y = 10;
+		p.speed = 10;
 		dialog.addChild(dimg);
-		var texts = Texts.BUILDINGS.get(kind);
-		if( texts == null ) texts = ["NO TEXT", "NO TEXT"];
+		var texts = getTexts();
 		var dtext = new Dialog(Const.W - 50, 50, texts[clickCount == 0 ? 0 : 1 + Std.random(hxd.Math.imin(Math.floor(Math.sqrt(clickCount)), texts.length - 1))]);
 		dialog.addChild(dtext);
 		dtext.onReady = function() {
+			p.speed = 0;
+			p.currentFrame = 0;
 			if( dialog != game.curDialog ) return;
 			if( clickCount > 0 ) {
 				for( a in getActions() )
