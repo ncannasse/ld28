@@ -1,0 +1,1 @@
+typedef Res = hxd.Res;
