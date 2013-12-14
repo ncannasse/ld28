@@ -1,6 +1,6 @@
 -cp src
 -swf ld28.swf
--swf-header 800:600:60:FFFFFF
+-swf-header 768:576:60:FFFFFF
 --flash-strict
 -swf-version 11.6
 -main Game

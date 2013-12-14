@@ -1,7 +1,7 @@
 class Game extends hxd.App {
 	
 	override function init() {
-		engine.backgroundColor = 0xFFFF0000;
+		s2d.setFixedSize(Const.W, Const.H);
 	}
 	
 	override function update(dt:Float) {
