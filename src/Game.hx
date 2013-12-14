@@ -1,20 +1,186 @@
+import Const;
+
+@:publicFields
 class Game extends hxd.App {
 	
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
 	public var world : World;
+	public var buildings : Map<BuildingKind,Building>;
+	public var curDialog : h2d.Sprite;
+	public var inventory : Array<Bool>;
+	var items : Array<h2d.Tile>;
+	var invSpr : h2d.Sprite;
+	var updates : Array < { function update(dt:Float) : Void; }>;
+	var curAnnounce : h2d.Sprite;
 	
 	override function init() {
 		scene = s2d;
-		s2d.setFixedSize(Const.W, Const.H);
+		updates = [];
+		buildings = new Map();
+		s2d.setFixedSize(Const.W, Const.H + 8);
 		world = new World(Res.map, Res.tiles);
 		s2d.add(world.root, 0);
 		font = Res.Minecraftia.build(8, { antiAliasing : false } );
 		
-		dialog(Text.WELCOME, function() {
-			trace("OK");
-		});
+		var itemsTile = Res.items.toTile();
+		items = [for( i in 0...16 ) itemsTile.sub(i * 8, 0, 8, 8)];
+		
+		inventory = [true];
+		updateInventory();
+	
+		/*
+		var iall = new h2d.Interactive(Const.W, Const.H - 8);
+		iall.y = 8;
+		iall.onClick = function(e:hxd.Event) {
+			if( curDialog != null && curDialog.parent == null ) curDialog = null;
+			if( curDialog != null )
+				curDialog.click();
+			else
+				e.propagate = true;
+		}
+		iall.onOver = function(e) { e.cancel = true; e.propagate = true; }
+		iall.onOut = function(e) { e.cancel = true; e.propagate = true; }
+		iall.onMove = function(e) { e.cancel = true; e.propagate = true; }
+		s2d.add(iall, 2);
+		*/
+		
+//		dialog(Texts.WELCOME, function() {
+			unlockBuilding(BFarmer);
+//		});
+		
+		world.onClickBuilding = function(b) {
+			buildings.get(b).click();
+		};
 	}
+	
+	function updateInventory() {
+		if( invSpr != null ) invSpr.remove();
+		invSpr = new h2d.Sprite();
+		invSpr.y = Const.H;
+		new h2d.Bitmap(h2d.Tile.fromColor(0xFF000000,Const.W,8), invSpr);
+		s2d.add(invSpr, 2);
+		var items = Res.items.toTile();
+		var tip = new h2d.Text(font, invSpr);
+		tip.visible = false;
+		tip.y = -12;
+		tip.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
+		for( i in 0...inventory.length ) {
+			if( !inventory[i] ) continue;
+			var s = new h2d.Bitmap(items.sub(i * 8, 0, 8, 8), invSpr);
+			s.x = i * 8;
+			var int = new h2d.Interactive(8, 8, invSpr);
+			int.x = i * 8;
+			int.onOver = function(_) {
+				tip.x = i * 8 + 2;
+				tip.text = Texts.ITEMNAME(Item.createAll()[i]);
+				tip.visible = true;
+			};
+			int.onOut = function(_) {
+				tip.visible = false;
+			};
+		}
+		invSpr.addChild(tip);
+	}
+	
+	function has(i:Item) {
+		return inventory[i.getIndex()];
+	}
+	
+	function checkAdd( i : Item ) {
+		if( has(i) ) {
+			announce("You already got one " + Texts.ITEMNAME(i), i, 0xFF0000);
+			return false;
+		}
+		add(i);
+		return true;
+	}
+	
+	function add(i:Item,silent=false) {
+		if( has(i) ) throw "assert";
+		if( !silent ) announce("You got " + Texts.ITEMNAME(i), i);
+		inventory[i.getIndex()] = true;
+		updateInventory();
+	}
+	
+	function use(i:Item) {
+		if( !inventory[i.getIndex()] )
+			throw "assert";
+		inventory[i.getIndex()] = false;
+		updateInventory();
+	}
+	
+	function announce( t : String, ?icon : Item, ?color : Int ) {
+		var tf = new h2d.Text(font);
+		tf.text = t;
+		var size =  tf.textWidth + 2 + (icon == null ? 0 : 10);
+		var a = new h2d.Sprite();
+		a.x = Const.W - size;
+		a.addChild(tf);
+		tf.x = 1;
+		tf.y = -2;
+		if( color != null )
+			tf.textColor = color;
+		if( icon != null ) {
+			var ic = new h2d.Bitmap(items[icon.getIndex()], a);
+			ic.x = 1;
+			ic.y = 1;
+			tf.x += 10;
+		}
+		s2d.add(a, 3);
+		a.y = Const.H + 8;
+		var py = 0.;
+		var s = -1;
+		var w = 0.;
+		var u = new Update();
+		u.update = function(dt) {
+			py += s * dt;
+			if( py < -9 ) {
+				py = -9;
+				w += dt;
+				if( w > 120 ) s *= -1;
+			}
+			if( py > 0 ) {
+				a.remove();
+				u.stop();
+			}
+			a.y = Const.H + 8 + Std.int(py);
+		};
+		if( curAnnounce != null ) curAnnounce.remove();
+		curAnnounce = a;
+	}
+	
+	function unlockBuilding( b : BuildingKind ) {
+		if( buildings.exists(b) )
+			return;
+			
+		announce("You got " + Texts.BUILDNAME(b));
+			
+		var b = switch( b ) {
+		case BFarmer: new b.Farmer();
+		case BWheat: new b.Wheat();
+		case BTavern: new b.Tavern();
+		}
+		buildings.set(b.kind, b);
+		world.rebuild();
+	}
+	
+	function newPanel(w, h) {
+		var g = new h2d.ScaleGrid(Res.ui.toTile(), 5, 5);
+		g.width = w;
+		g.height = h;
+		g.colorKey = 0xFF00FF;
+		scene.add(g, 1);
+		return g;
+	}
+	
+	function removeDialog() {
+		if( curDialog != null ) {
+			curDialog.remove();
+			curDialog = null;
+		}
+	}
+
 	
 	function dialog( t : Array<String>, ?onDone ) {
 		if( t.length == 0 ) {
@@ -26,13 +192,19 @@ class Game extends hxd.App {
 		d.y = Const.H - d.height;
 		d.onClick = function() {
 			d.remove();
+			curDialog = null;
 			var t2 = t.copy();
 			t2.shift();
 			dialog(t2, onDone);
 		};
+		curDialog = d;
 	}
 	
 	override function update(dt:Float) {
+		for( a in updates )
+			a.update(dt);
+		for( b in buildings )
+			b.update(dt);
 	}
 	
 	public static var inst : Game;

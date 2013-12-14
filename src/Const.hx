@@ -1,3 +1,15 @@
+enum BuildingKind {
+	BFarmer;
+	BWheat;
+	BTavern;
+}
+
+enum Item {
+	Seed;
+	Wheat;
+	Beer;
+}
+
 class Const {
 
 	public static inline var W = 384;

@@ -12,6 +12,7 @@ class Dialog extends h2d.Sprite {
 	
 	public function new(width:Int, height:Int, text : String) {
 		super();
+		if( text == null ) text = "NULL";
 		game = Game.inst;
 		game.scene.add(this, 1);
 		bg = new h2d.ScaleGrid(Res.ui.toTile(), 5, 5, this);
@@ -21,9 +22,7 @@ class Dialog extends h2d.Sprite {
 		tf.x = 7;
 		tf.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.3 };
 		int = new h2d.Interactive(0,0,this);
-		int.onClick = function(_) {
-			if( textPos == text.length ) onClick() else { textPos = text.length; tf.text = text; }
-		}
+		int.onClick = function(_) click();
 		this.width = width;
 		this.height = height;
 		this.text = text;
@@ -32,22 +31,30 @@ class Dialog extends h2d.Sprite {
 	function updateText() {
 		if( textPos == text.length ) {
 			timer.stop();
+			onReady();
 			return;
 		}
 		textPos++;
 		tf.text = text.substr(0, textPos);
 	}
 	
+	public function click() {
+		if( textPos == text.length ) onClick() else if( textPos < text.length ) { textPos = text.length; tf.text = text; timer.stop(); onReady(); };
+	}
+	
 	public dynamic function onClick() {
 	}
 	
+	public dynamic function onReady() {
+	}
 	
 	function set_text(t) {
+		text = t;
 		timer = new haxe.Timer(30);
 		timer.run = updateText;
 		tf.text = "";
 		textPos = 0;
-		return text = t;
+		return t;
 	}
 	
 	function set_width(w) {
