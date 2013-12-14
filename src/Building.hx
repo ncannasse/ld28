@@ -65,6 +65,7 @@ class Building {
 				var c = pending.callb;
 				pending.mc.remove();
 				pending = null;
+				Res.sfx.done.play();
 				c();
 			}
 		}
@@ -92,13 +93,17 @@ class Building {
 		spr.y = 50;
 		var int = new h2d.Interactive(spr.width, spr.height, spr);
 		int.onOver = function(_) {
-			if( a.enable() ) spr.color = new h3d.Vector(1.2, 1.2, 1.2);
+			if( a.enable() ) {
+				spr.color = new h3d.Vector(1.2, 1.2, 1.2);
+				Res.sfx.menu.play();
+			}
 		};
 		int.onOut = function(_) {
 			spr.color = null;
 		};
 		int.onClick = function(_) {
 			if( a.enable() ) {
+				Res.sfx.confirm.play();
 				actions = null;
 				game.removeDialog();
 				a.callb();
@@ -131,7 +136,7 @@ class Building {
 		dialog = new h2d.Sprite();
 		actions = [];
 		game.scene.add(dialog, 1);
-		var dimg = new Dialog(50, 50, "");
+		var dimg = new Dialog(50, 50, "", null);
 		var index = kind.getIndex();
 		var pt = Res.portraits.toTile();
 		var p = new h2d.Anim(dimg);
@@ -143,7 +148,8 @@ class Building {
 		p.speed = 10;
 		dialog.addChild(dimg);
 		var texts = getTexts();
-		var dtext = new Dialog(Const.W - 50, 50, texts[clickCount == 0 ? 0 : 1 + Std.random(hxd.Math.imin(Math.floor(Math.sqrt(clickCount)), texts.length - 1))]);
+		var sfx = Res.loader.load("sfx/speak0" + ((index + 1) % 5) + ".wav").toSound();
+		var dtext = new Dialog(Const.W - 50, 50, texts[clickCount == 0 ? 0 : 1 + Std.random(hxd.Math.imin(Math.floor(Math.sqrt(clickCount)), texts.length - 1))], sfx);
 		dialog.addChild(dtext);
 		dtext.onReady = function() {
 			p.speed = 0;

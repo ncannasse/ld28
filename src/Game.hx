@@ -3,7 +3,7 @@ import Const;
 @:publicFields
 class Game extends hxd.App {
 	
-	public static inline var DEBUG = true;
+	public static inline var DEBUG = false;
 	
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
@@ -61,13 +61,15 @@ class Game extends hxd.App {
 				unlockBuilding(b);
 			}
 		} else {
-			dialog(Texts.WELCOME, function() {
+			dialog(Texts.WELCOME, Res.sfx.speak00, function() {
 				unlockBuilding(BFarmer);
+				Res.sfx.done.play();
 			});
 		}
 		
 		world.onClickBuilding = function(b) {
-			buildings.get(b).click();
+			var bd = buildings.get(b);
+			if( bd != null ) bd.click();
 		};
 	}
 	
@@ -206,20 +208,20 @@ class Game extends hxd.App {
 	}
 
 	
-	function dialog( t : Array<String>, ?onDone ) {
+	function dialog( t : Array<String>, sfx, ?onDone ) {
 		if( t.length == 0 ) {
 			if( onDone != null )
 				onDone();
 			return;
 		}
-		var d = new Dialog(Const.W, 50, t[0]);
+		var d = new Dialog(Const.W, 50, t[0], sfx);
 		d.y = Const.H - d.height;
 		d.onClick = function() {
 			d.remove();
 			curDialog = null;
 			var t2 = t.copy();
 			t2.shift();
-			dialog(t2, onDone);
+			dialog(t2, sfx, onDone);
 		};
 		curDialog = d;
 	}

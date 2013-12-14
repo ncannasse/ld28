@@ -5,3 +5,6 @@ Day 1:
 11:20-14:30 : basic gameplay logic and display
 14:30-15:00 : lunch
 15:00-19:30 : 9 base buildings and 8 items working
+19:30-21:00 : break
+21:00-22:00 : sounds (dialogs, menus)
+

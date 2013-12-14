@@ -9,9 +9,15 @@ class Dialog extends h2d.Sprite {
 	public var height(default, set) : Int;
 	public var text(default, set) : String;
 	var textPos : Int;
+	var sfx : hxd.res.Sound;
 	
-	public function new(width:Int, height:Int, text : String) {
+	public function new(width:Int, height:Int, text : String,sfx:hxd.res.Sound) {
 		super();
+		this.sfx = sfx;
+		if( sfx != null ) {
+			sfx.loop = true;
+			sfx.play();
+		}
 		if( text == null ) text = "NULL";
 		game = Game.inst;
 		game.scene.add(this, 1);
@@ -28,18 +34,32 @@ class Dialog extends h2d.Sprite {
 		this.text = text;
 	}
 	
+	override function onDelete() {
+		super.onDelete();
+		if( sfx != null )
+			sfx.stop();
+		timer.stop();
+	}
+	
 	function updateText() {
 		if( textPos == text.length ) {
 			timer.stop();
 			onReady();
+			if( sfx != null ) sfx.stop();
 			return;
+		}
+		if( sfx != null ) {
+			switch( text.charCodeAt(textPos) ) {
+			case " ".code, "\n".code: sfx.volume = 0;
+			default: if( sfx.volume == 0 ) sfx.volume = 1 else sfx.volume *= 0.9;
+			}
 		}
 		textPos++;
 		tf.text = text.substr(0, textPos);
 	}
 	
 	public function click() {
-		if( textPos == text.length ) onClick() else if( textPos < text.length ) { textPos = text.length; tf.text = text; timer.stop(); onReady(); };
+		if( textPos == text.length ) onClick() else if( textPos < text.length ) { textPos = text.length; tf.text = text; updateText(); };
 	}
 	
 	public dynamic function onClick() {

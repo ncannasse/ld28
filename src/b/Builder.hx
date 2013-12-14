@@ -16,7 +16,7 @@ class Builder extends Building {
 	
 	override function getTexts() {
 		return [
-			"In exchance for furnitures I'll set new buildings for your Highness.\nYou can spend resources in several times.",
+			"In exchange for furnitures I'll set new buildings for your Highness.\nTip : you can spend resources in several times.",
 			"Where do you want to spend your furnitures, your Highness?",
 			"One day I'll build a Palace for you, your Highness.",
 		];
