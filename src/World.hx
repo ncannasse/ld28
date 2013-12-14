@@ -22,6 +22,7 @@ class World {
 				for( x in 0...width ) {
 					var t = l.data[pos++] - 1;
 					if( t < 0 ) continue;
+					if( l.name == "Buildings" || l.name == "BuildingsShadows" ) continue;
 					g.add(x * 16, y * 16, tiles[t]);
 				}
 			g.alpha = l.opacity;

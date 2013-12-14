@@ -10,17 +10,22 @@
  </layer>
  <layer name="Ground Details" width="24" height="18">
   <data encoding="base64" compression="zlib">
-   eJytVNsNwjAMtJpQOkBBnYB/Hgvw2IgJQLA3seQTh+WkSHDSKampL/aROotIV5hsBUZpY2nr1vJy4UT7LogvKG8MtCJsaa8ag2miXl97T/p5Rr8P9H393hdgzh/gVHgs3AdnKC8Vsj5iEfBerY8aftVvaSPP99TSh0/w6mB7Bd8bnxcBte4q7+lZZxdj/cnyhoo+aj2T/jKo0WNna5bP+9lCq0/vKfTTH/TxHR2J7Nnc/U/y7nMOydYFxTYBFWvHFeXA/55i6hHfV/7NY6S62TvUdaVYZ8+ZcpK08c1/Ai3Vn+RzfoIK/021vL4X3pxGdvRzD4BfrI9z77Y+Cp+213MGp8Me8Vz1fX87U2/ynssv+jgU0Q==
+   eJytVNFuwjAMtJpQ+gFl6hfwDuwHuvJHTHsHsf8mlnzisJwUaTvpFNfUF+dInUWkK0y2AqO0sbX1YHW5cKK4C/IbqhsDrQgHilVjME3063vvST9bfCn8CbT7QN/3730B1vwBvgrnwlOwh/JcIesjFwHv1c5Rw1/1W9qo82dq6cMnePVpsYLvja+LgF6Plfd0r8XlWH+yuqGij14X0t8GPQLf1I8iy+v9bKF1Tu8p9NM/6OM7mons2dr9T/I85xqSrRvK7QMqPhx3VAP/e8qpR3xf+TePkfpm79DXhXKdPWeqSdLGO/8JtFR/ktf5CSr8N9Xy+lZ4dRrZ0c89AH6xPva92Xov/LVY9xmcDnvEc9Wf+92ZepXnXH4AqrEWJw==
   </data>
  </layer>
  <layer name="Ground Details 2" width="24" height="18">
   <data encoding="base64" compression="zlib">
-   eJytlNEJwzAMRE3oRwdISwYw+W9HaTeoN2iaDJAuHhtUOA7JdewcHBFGfpaFHOd0XSB+GjnWeomQH+Q7UE6A2DfwJ/ku5Ik3VfJR3u2vNcdPPTlFdxIz36pD05n2IasTW3XsVek+Le8WfVfWcd6wfu7JQHmlwnlrqV8Tz9tRfGvWavipvw9w7n1r/E/0nMlL/X2Bg7PVR18Vj4qR/wbn+Jr+9SzdD/8ffNefvBHXvqVSWfyv+Gg+c1vPYf5q5OEZG0MnGNM=
+   eJytlOsJAjEQhMPhDwtQuQKC/7UVS0gJPgrQxk1ghWGYjXncwHB7uc2XTcheCFpHiG9OjjfeIuQne66UkyCOE/yHPV/keyfT46Ni6K+1xi9nssteLGa+V4fSnuYhazF7dfSqdZ7Ku2RfxTjeN6yfz2SlvFbhfZupX4nv21Z8766N8Lmfa/2t+KXPnpW8RN/4HXXIPgmfhUf4Sv/OrOwP/x+815+iE4/2Uqs8/se8NZ+5s+sw/+3k4RpfgrMVYg==
+  </data>
+ </layer>
+ <layer name="BuildingsShadows" width="24" height="18" opacity="0.45">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIOABxJ545C2wqPMi0YyhDLD5fxQMHECPh4GIF1j6h9k9mjZGAb0BAM22BY0=
   </data>
  </layer>
  <layer name="Shadows" width="24" height="18" opacity="0.45">
   <data encoding="base64" compression="zlib">
-   eJxjYBh+wAKNJgZ4ALEnEFsCsRUeM2HqQMALhxnDEWDzPyG11AK44oRe9g8WYMGAOx7omfbQ85cHEh4q6R9fPodhdDUWWDCp5lMK0M2lhT0wM2nlB2oCAMYNDM0=
+   eJxjYBh+wAKNJgVYArEVFd0yEgE54Y4PkBon1LZ/sAALhsHht8HgBkoBrjRlgYTR1VhgwaSaTylAN5cW9sDMHAplIQAu1wdU
   </data>
  </layer>
  <layer name="Trees" width="24" height="18">
@@ -35,7 +40,7 @@
  </layer>
  <layer name="Buildings" width="24" height="18">
   <data encoding="base64" compression="zlib">
-   eJxjYBjcIAyIw4E4ggi1ZkBsjiZWAcSVQFwFxNVY9KQBcToQZxAwOxWI3YDYHUksBIg7gLgTiLuAuJsIN9ISRAJxFI3MBvk/E4izgDiFCuZhiytqAvS4oidA9xu1/YruNxg/FYtaWJqgRXiD0gEsTQxkeI+CkQsAbVkQgA==
+   eJxjYBjcIAyIw4E4ggi1ZkBsjiZWAcSVQFwFxNVY9KQBcToQZxAwOxWI3YDYHUksBIg7gLgTiLuAuJsIN9ISRAJxFI3MBvk/E4izgDiFCuZhiytqAvS4oidA9xu1/YruNxg/FYtaWJog1g1BSJgQAKUDWJogNryTkDAtQBESHgXDHwAAM6kT8g==
   </data>
  </layer>
 </map>
