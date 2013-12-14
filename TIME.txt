@@ -4,3 +4,4 @@ Day 1:
 10:30-11:20 : village display and dialog text
 11:20-14:30 : basic gameplay logic and display
 14:30-15:00 : lunch
+15:00-19:30 : 9 base buildings and 8 items working

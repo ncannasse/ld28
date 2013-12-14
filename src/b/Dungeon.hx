@@ -24,12 +24,12 @@ class Dungeon extends Building
 	override function getActions() : Array<Building.Action> {
 		return [{
 			item : Soldier,
-			text : "Level 1"+(level <= 0 || level > 1 ? "" : " "+Std.int(level*10)+"%"),
+			text : "Level 1"+(level <= 0 || level > 1 ? "" : " "+Std.int(level*100)+"%"),
 			enable : game.has.bind(Soldier),
 			callb : function() {
 				game.use(Soldier);
 				start(15, function() {
-					level++;
+					level += 0.3334;
 					game.checkAdd(Gold);
 				});
 				unlock(BBuilder);
