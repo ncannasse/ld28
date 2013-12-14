@@ -3,6 +3,8 @@ import Const;
 @:publicFields
 class Game extends hxd.App {
 	
+	public static inline var DEBUG = true;
+	
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
 	public var world : World;
@@ -51,16 +53,18 @@ class Game extends hxd.App {
 		s2d.add(iall, 2);
 		*/
 
-		/*
-		dialog(Texts.WELCOME, function() {
-			unlockBuilding(BFarmer);
-		});
-		*/
-		
-		inventory = [true, true, true, true, true];
-		updateInventory();
-		for( b in BuildingKind.createAll() )
-			unlockBuilding(b);
+		if( DEBUG ) {
+			inventory = [true, true, true, true, true, true, true];
+			updateInventory();
+			for( b in BuildingKind.createAll() ) {
+				//if( b.getIndex() > BBuilder.getIndex() ) continue;
+				unlockBuilding(b);
+			}
+		} else {
+			dialog(Texts.WELCOME, function() {
+				unlockBuilding(BFarmer);
+			});
+		}
 		
 		world.onClickBuilding = function(b) {
 			buildings.get(b).click();
@@ -113,6 +117,8 @@ class Game extends hxd.App {
 		if( !silent ) announce("You got " + Texts.ITEMNAME(i), i);
 		inventory[i.getIndex()] = true;
 		updateInventory();
+		for( b in buildings )
+			b.refresh();
 	}
 	
 	function use(i:Item) {
@@ -174,6 +180,10 @@ class Game extends hxd.App {
 		case BTavern: new b.Tavern();
 		case BTower: new b.Tower();
 		case BDungeon: new b.Dungeon();
+		case BBuilder: new b.Builder();
+		case BWoodCutter: new b.WoodCutter();
+		case BMiner: new b.Miner();
+		case BShop: new b.Shop();
 		}
 		buildings.set(b.kind, b);
 		world.rebuild();

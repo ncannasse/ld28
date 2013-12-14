@@ -14,6 +14,11 @@ class Texts {
 		case BTavern: [7, 2, 6, 2, 8, 2, 4, 2];
 		case BTower: [4, 10, 2, 4, 4, 10, 2, 4];
 		case BDungeon: [14, 13, 4, 2, 15, 13, 2, 2];
+		case BBuilder: [14, 6, 2, 2, 14, 6, 2, 2];
+		case BWoodCutter: [16, 1, 4, 2, 16, 1, 3, 2];
+		case BMiner: [1, 15, 2, 2, 1, 15, 2, 2];
+		case BShop: [18, 4, 4, 2, 19, 4, 2, 2];
+		default: [];
 		}
 	}
 	
@@ -24,6 +29,9 @@ class Texts {
 		case Beer: "Beer";
 		case Soldier: "Soldier";
 		case Gold: "Gold";
+		case Wood: "Wood";
+		case Ore: "Ore";
+		case Diamond: "Diamond";
 		}
 	}
 	
@@ -34,6 +42,10 @@ class Texts {
 		case BTavern: "Tavern";
 		case BTower: "Guards Tower";
 		case BDungeon: "Dungeon";
+		case BBuilder: "Builder";
+		case BWoodCutter: "Lumbermill";
+		case BMiner: "Mine";
+		case BShop: "Shop";
 		}
 	}
 	

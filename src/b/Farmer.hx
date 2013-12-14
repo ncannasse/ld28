@@ -9,18 +9,18 @@ class Farmer extends Building {
 	
 	override function getTexts() {
 		return [
-			"Farmer : I'm glad you are safe, your Majesty.\nI'm just a poor farmer but I'll help your the best I can.",
+			"I'm glad you are safe, your Majesty.\nI'm just a poor farmer but I'll help your the best I can.",
 			"I'll plant these seeds for you",
 			"Want food ?",
 			"I'm tired of farming, but I'll make some efforts for your Majesty.",
 		];
 	}
 	
-	override function getActions() {
+	override function getActions() : Array<Building.Action> {
 		return [{
 			item : Seed,
 			text : "Plant Seed",
-			enable : game.has(Seed),
+			enable : game.has.bind(Seed),
 			callb : function() {
 				game.use(Seed);
 				start(4, function() game.unlockBuilding(BWheat));

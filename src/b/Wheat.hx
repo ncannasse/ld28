@@ -7,13 +7,17 @@ class Wheat extends Building {
 	}
 	
 	override function click() {
-		if( !game.checkAdd(Wheat) )
+		if( pending != null )
 			return;
-		if( !game.has(Seed) )
-			game.add(Seed,true);
-		game.buildings.remove(BWheat);
-		game.world.rebuild();
-		haxe.Timer.delay(game.unlockBuilding.bind(BTavern), 1000);
+		start(1,function() {
+			if( !game.checkAdd(Wheat) )
+				return;
+			if( !game.has(Seed) )
+				game.add(Seed,true);
+			game.buildings.remove(BWheat);
+			game.world.rebuild();
+		});
+		unlock(BTavern);
 	}
 	
 }

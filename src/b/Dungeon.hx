@@ -21,18 +21,18 @@ class Dungeon extends Building
 	}
 	
 	
-	override function getActions() {
+	override function getActions() : Array<Building.Action> {
 		return [{
 			item : Soldier,
 			text : "Level 1"+(level <= 0 || level > 1 ? "" : " "+Std.int(level*10)+"%"),
-			enable : game.has(Soldier),
+			enable : game.has.bind(Soldier),
 			callb : function() {
 				game.use(Soldier);
-				start(6, function() {
+				start(15, function() {
 					level++;
 					game.checkAdd(Gold);
 				});
-				//unlock(
+				unlock(BBuilder);
 			},
 		}];
 	}

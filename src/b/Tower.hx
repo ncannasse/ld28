@@ -16,14 +16,14 @@ class Tower extends Building {
 		];
 	}
 	
-	override function getActions() {
+	override function getActions() : Array<Building.Action> {
 		return [{
 			item : Beer,
 			text : "Recruit",
-			enable : game.has(Beer),
+			enable : game.has.bind(Beer),
 			callb : function() {
 				game.use(Beer);
-				start(6, function() game.checkAdd(Soldier));
+				start(10, function() game.checkAdd(Soldier));
 				unlock(BDungeon);
 			},
 		}];

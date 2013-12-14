@@ -15,11 +15,11 @@ class Tavern extends Building {
 		];
 	}
 	
-	override function getActions() {
+	override function getActions() : Array<Building.Action> {
 		return [{
 			item : Wheat,
 			text : "Malt Beer",
-			enable : game.has(Wheat),
+			enable : game.has.bind(Wheat),
 			callb : function() {
 				game.use(Wheat);
 				start(6, function() game.checkAdd(Beer));

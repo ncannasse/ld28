@@ -4,6 +4,10 @@ enum BuildingKind {
 	BTavern;
 	BTower;
 	BDungeon;
+	BBuilder;
+	BWoodCutter;
+	BMiner;
+	BShop;
 }
 
 enum Item {
@@ -12,6 +16,9 @@ enum Item {
 	Beer;
 	Soldier;
 	Gold;
+	Wood;
+	Ore;
+	Diamond;
 }
 
 class Const {
