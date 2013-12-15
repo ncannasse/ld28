@@ -34,7 +34,7 @@ class Fight {
 		
 		anims = [];
 		var et = Res.entities.toTile();
-		for( frames in [3,2,3,3,4,4,2,5,4] )
+		for( frames in [3,2,3,3,4,4,2,5,4,4,4] )
 			anims.push([for( i in 0...frames ) et.sub(i * 16, anims.length * 16, 16, 16, -8, -16)]);
 			
 		entities = [];
@@ -98,7 +98,7 @@ class Fight {
 							a.frames = game.anims[0];
 							a.currentFrame = Math.random() * a.frames.length;
 							No;
-						case 48:
+						case 48,49:
 							var a = new h2d.Anim(root);
 							a.x = x * 16;
 							a.y = y * 16;
@@ -106,7 +106,7 @@ class Fight {
 							a.colorKey = 0x1D8700;
 							a.frames = game.anims[4];
 							a.currentFrame = Math.random() * a.frames.length;
-							Lava;
+							t == 48 ? Lava : Block;
 						default:
 							throw "COL#" + t;
 						}

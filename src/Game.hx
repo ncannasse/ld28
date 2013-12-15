@@ -30,7 +30,7 @@ class Game extends hxd.App {
 		
 		var atile = Res.sprites.toTile();
 		anims = [];
-		for( frames in [5,5,5,4,4] )
+		for( frames in [5,5,5,4,4,4] )
 			anims.push([for( i in 0...frames ) atile.sub(i * 16, anims.length * 16, 16, 16)]);
 		
 		var itemsTile = Res.items.toTile();
@@ -62,7 +62,7 @@ class Game extends hxd.App {
 				//if( b.getIndex() > BBuilder.getIndex() ) continue;
 				unlockBuilding(b);
 			}
-			new Fight(3);
+			new Fight(4);
 		} else {
 			dialog(Texts.WELCOME, Res.sfx.speak00, function() {
 				unlockBuilding(BFarmer);
@@ -101,6 +101,14 @@ class Game extends hxd.App {
 				tip.visible = false;
 			};
 		}
+		for( i in 0...inventory.length ) {
+			if( !inventory[i] ) continue;
+			var o = new h2d.Bitmap(Res.one.toTile(), invSpr);
+			o.colorKey = 0;
+			o.x = i * 12 + 8;
+			o.y = 7;
+		}
+
 		if( stats != null ) {
 			var ico = new h2d.Bitmap(items[Hp.getIndex()], invSpr);
 			ico.x = 238;

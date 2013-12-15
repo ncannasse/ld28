@@ -7,7 +7,7 @@ class Entity {
 	public var y(get,never) : Float;
 	public var mc : h2d.Anim;
 	var gravity : Float = 0.2;
-	var frictX = 0.92;
+	var frictX = 0.85;
 	var frictY = 0.94;
 	var bw : Int;
 	var bh : Int;
@@ -49,7 +49,7 @@ class Entity {
 	}
 	
 	function colWith( e : Entity ) {
-		return Math.abs(x - e.x) < (cw + e.cw) / 32 && Math.abs( (e.y - e.ch / 32) - (y - ch / 32) ) < (e.ch + ch) / 32;
+		return Math.abs(x - e.x) < (cw + e.cw) / 32 && Math.abs( e.y - y ) < (ch + e.ch) / 32;
 	}
 	
 	public function hit( power : Float ) {
@@ -140,9 +140,10 @@ class Entity {
 
 		dy += gravity * dt;
 		yr += dy*dt/16;
-		dy *= Math.pow(frictY,dt);
-		if( collide(cx,cy) && yr <= ch/32 ) {
-			dy = 0;
+		dy *= Math.pow(frictY, dt);
+		
+		if( collide(cx, cy-1) && yr <= ch / 32 ) {
+			if( dy < 0 ) dy = -0.01;
 			yr = ch/32;
 		}
 		if( collide(cx,cy+1) && yr >= 1 - ch/32 ) {

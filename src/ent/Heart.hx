@@ -12,6 +12,7 @@ class Heart extends Entity {
 			for( e in fight.entities ) {
 				var m = Std.instance(e, Mob);
 				if( m == null ) continue;
+				
 				if( colWith(m)  ) {
 					m.hit(fight.game.stats.att);
 					dx = 0;
