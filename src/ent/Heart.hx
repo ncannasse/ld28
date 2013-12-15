@@ -17,7 +17,7 @@ class Heart extends Entity {
 					dx = 0;
 				}
 			}
-			if( Math.abs(dx) < 0.3 ) {
+			if( Math.abs(dx) < 0.3 && dt > 0 ) {
 				active = false;
 				playAnim(2);
 				mc.loop = false;

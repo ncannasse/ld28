@@ -20,7 +20,7 @@
  </layer>
  <layer name="BuildingsShadows" width="24" height="18" opacity="0.45">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFIOABxJ545C2wqPMi0YyhDLD5fxQMHECPh4GIF1j6h9k9FNKGB8PgcOc2JLdsG2C3DGUAANLSCGI=
+   eJxjYBgFIOABxJ545C2wqPMi0YyhDLD5fxRQF3gwEB++6OoGIl5g6R9m91BIG6SEMS3BNiS3bBtgtwxlAACGqwk7
   </data>
  </layer>
  <layer name="Shadows" width="24" height="18" opacity="0.45">

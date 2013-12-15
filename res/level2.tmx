@@ -3,24 +3,26 @@
  <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16">
   <image source="dungeon.png" trans="333333" width="256" height="256"/>
  </tileset>
- <layer name="fg" width="16" height="14">
+ <layer name="FG" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYKQQkwtG9Y/qHwz6yTWD0nwDwgBmbAA6
+   eJxjZGBgYKQQkwuorZ+QecSoJ6Qfn3mkAkrDHZ/96P7EZz+l7h/q+skxg1pxBwCToABR
   </data>
  </layer>
  <objectgroup name="obj" width="16" height="14">
   <object name="start" x="24" y="177"/>
-  <object name="monster" type="0" x="227" y="193"/>
-  <object name="exit" x="228" y="195"/>
+  <object name="monster" type="1" x="189" y="192"/>
+  <object name="exit" x="24" y="184"/>
+  <object name="monster" type="1" x="130" y="134"/>
+  <object name="monster" type="1" x="105" y="188"/>
  </objectgroup>
  <layer name="col" width="16" height="14" opacity="0.64">
   <data encoding="base64" compression="zlib">
-   eJwTZGBgEKQQkwtG9VNXvyKJ7MHm/oHST64ZlOYbEAYAbR0ETg==
+   eJwTZGBgEKQQkwsGm35FIvQgq6GW/cMl/BVJZA8W95NrBjXiDgCImwV+
   </data>
  </layer>
  <layer name="FG2" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2BkAyEqmUEqBgEAKXgA/Q==
+   eJxjYBg+QAiKyZUfKCBEJh4F1AHkhCW6HnLjDgDGHgJB
   </data>
  </layer>
 </map>

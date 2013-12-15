@@ -30,7 +30,7 @@ class Game extends hxd.App {
 		
 		var atile = Res.sprites.toTile();
 		anims = [];
-		for( frames in [5,5,5,4] )
+		for( frames in [5,5,5,4,4] )
 			anims.push([for( i in 0...frames ) atile.sub(i * 16, anims.length * 16, 16, 16)]);
 		
 		var itemsTile = Res.items.toTile();
@@ -62,7 +62,7 @@ class Game extends hxd.App {
 				//if( b.getIndex() > BBuilder.getIndex() ) continue;
 				unlockBuilding(b);
 			}
-			new Fight(1);
+			new Fight(3);
 		} else {
 			dialog(Texts.WELCOME, Res.sfx.speak00, function() {
 				unlockBuilding(BFarmer);

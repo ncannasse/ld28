@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="16" height="14" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16">
+  <image source="dungeon.png" trans="333333" width="256" height="256"/>
+ </tileset>
+ <layer name="FG" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYKQQkwtG9VMWrvjUgcSZKNAPA/jMINadTFCMrnYwhT+6OCl60c0gJe8AAH+UAEo=
+  </data>
+ </layer>
+ <layer name="FG2" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFAw2EcGBqmEsJYKKiGdTyEy0AuruIcSchPbjiFD0cAHP3AaM=
+  </data>
+ </layer>
+ <objectgroup name="obj" width="16" height="14">
+  <object name="start" x="24" y="177"/>
+  <object name="monster" type="0" x="212" y="198"/>
+  <object name="exit" x="25" y="89"/>
+  <object name="monster" type="2" x="91" y="88"/>
+  <object name="monster" type="0" x="105" y="196"/>
+  <object name="monster" type="2" x="70" y="86"/>
+ </objectgroup>
+ <layer name="col" width="16" height="14" opacity="0.64">
+  <data encoding="base64" compression="zlib">
+   eJwTZGBgEKQQkwuorV+RRPZgcT8p4Uqs+4lxGyE1pMgTCmNsZg2m8EcXJ0UvDBtCMSl5BwAM1gYB
+  </data>
+ </layer>
+</map>

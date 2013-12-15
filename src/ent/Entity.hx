@@ -45,6 +45,7 @@ class Entity {
 		playAnim(id);
 		fight.entities.push(this);
 		init();
+		update(0);
 	}
 	
 	function colWith( e : Entity ) {
@@ -61,6 +62,7 @@ class Entity {
 	}
 
 	function kill() {
+		life = 0;
 		remove();
 	}
 	
@@ -81,12 +83,17 @@ class Entity {
 	}
 	
 	function onCollide(col:Fight.Collide) {
+		if( col == Lava ) {
+			new Fx(7, x, y);
+			kill();
+		}
 		return true;
 	}
 	
 	function collide(cx, cy) {
 		return cx < 0 || cy < 0 || cx >= fight.width || cy >= fight.height || switch( fight.col[cx][cy] ) {
 		case No: false;
+		case Lava: if( y > cy ) onCollide(Lava) else false;
 		case col: onCollide(col);
 		}
 	}
@@ -125,17 +132,22 @@ class Entity {
 			cx++;
 			xr--;
 		}
+		
+		var ca = mc.colorAdd;
+		ca.x *= 0.5;
+		ca.y *= 0.5;
+		ca.z *= 0.5;
 
 		dy += gravity * dt;
 		yr += dy*dt/16;
 		dy *= Math.pow(frictY,dt);
-		if( collide(cx,cy-1) && yr<=0.4 ) {
+		if( collide(cx,cy) && yr <= ch/32 ) {
 			dy = 0;
-			yr = 0.4;
+			yr = ch/32;
 		}
-		if( collide(cx,cy+1) && yr>=0.5 ) {
+		if( collide(cx,cy+1) && yr >= 1 - ch/32 ) {
 			dy = 0;
-			yr = 0.5;
+			yr = 1 - ch/32;
 		}
 		while( yr<0 ) {
 			cy--;
@@ -147,7 +159,7 @@ class Entity {
 		}
 
 		mc.x = Std.int(x*16);
-		mc.y = Std.int(y*16 + 8);
+		mc.y = Std.int(y*16 + (ch>>1) + 1);
 	}
 	
 }
