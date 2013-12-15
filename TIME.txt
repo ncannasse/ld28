@@ -19,3 +19,5 @@ Day 2:
 13:30-15:30 : fixed fights, review gameplay loop, academy
 15:30-17:30 : fisher, stables, complete content?
 17:30-18:30 : tuning / balancing fight
+18:30-19:00 : music (arg)
+19:00 : break
