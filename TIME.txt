@@ -10,7 +10,7 @@ Total = 13h
 21:00-22:00 : sounds (dialogs, menus)
 
 Day 2:
-Total = 14h30
+Total = 15h00
 
 04:30-06:00 : Princess castle, changed wheat, stats display
 06:00-08:30 : first fight level and engine complete
@@ -23,5 +23,6 @@ Total = 14h30
 18:30-19:00 : music (arg)
 19:00-20:30 : diner
 20:30-23:00 : final boss, title screen, testing, balancing, completed sfx
+23:00-23:30 : screenshots, upload, submit
 
-TOTAL = 27h30
+TOTAL = 28h00
