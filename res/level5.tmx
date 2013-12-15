@@ -5,34 +5,34 @@
  </tileset>
  <layer name="FG" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYKQQq5GJYfrJBej6CZlHSL0aA2H9agTsU2PADdDlKA13fOHPiINNbPir4WBjcz+5YLDoJ8cMasUdAL/FBRE=
-  </data>
- </layer>
- <objectgroup name="obj" width="16" height="14">
-  <object name="start" x="24" y="177"/>
-  <object name="monster" type="1" x="189" y="192"/>
-  <object name="exit" x="24" y="184"/>
-  <object name="monster" type="1" x="130" y="134"/>
-  <object name="monster" type="1" x="105" y="188"/>
- </objectgroup>
- <layer name="col" width="16" height="14" opacity="0.64">
-  <data encoding="base64" compression="zlib">
-   eJwTZGBgEKQQkwsGm35FIvQgq6GW/bQIf0EcbGz2U+p+GFAkkT1Y4p8cM6gVdwDE5wWx
+   eJylUUEKADAIqh6z/z9x7DCIsGZN8BJoZioi+sk15NVP0dVn+Vkw+auesjzVDk/2HvZG9n/eQ4OW6e94mOOddfrPsiC9gVn08Xr0gxdQx3Evyhq5AfOEBko=
   </data>
  </layer>
  <layer name="FG2" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBg+QAiKyZUfKCBEJh4F1AHkhCW6HnLjDgDGHgJB
+   eJxjYBg5QAgN08MOWttHyE5q2S2Egx4IQMhuUt1Gjl/Q9WALZ2QxXPEBAFi1Anc=
+  </data>
+ </layer>
+ <objectgroup name="obj" width="16" height="14">
+  <object name="start" x="24" y="177"/>
+  <object name="exit" x="232" y="39"/>
+  <object name="monster" type="4" x="200" y="39"/>
+  <object name="monster" type="3" x="43" y="62"/>
+  <object name="monster" type="3" x="118" y="59"/>
+ </objectgroup>
+ <layer name="col" width="16" height="14" opacity="0.64">
+  <data encoding="base64" compression="zlib">
+   eJwTZGBgEKQQkwvorZ8e7iclnKhlP7lxRKz9MHWGSOpJDT9s6snxP7IefOFKrptIdQc6NkTC6OGGDQMAU64Gig==
   </data>
  </layer>
  <layer name="det" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBg+QJQKZoiQKTfYgAgO9igYXAAA3OQAZg==
+   eJxjYBg5QHQA7RChg920Atj8RGpYUivsQeYQCsuhFNYADl8Auw==
   </data>
  </layer>
  <layer name="det2" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBhZQISAvCiZcoMNiOJgj4LBBQDfaABp
+   eJxjYBg5QHUA7VYZ4naroNGDOSxFqWweueaoMhAOLwDIAwHK
   </data>
  </layer>
 </map>

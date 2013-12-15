@@ -5,12 +5,12 @@
  </tileset>
  <layer name="FG" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYKQQkwvorZ8Y9zORYP5g8z+54UEreUrtJ6SWWvaTYwa2dCSEhNHdhyvtAQCLsAB6
+   eJxjZGBgYKQQq5GJYfrJBaToZ8LjfnR1xJqPywxiAbX9T6p5xPqPXHlK7Sekllr2k2oGMekI3X249AAADFkCXA==
   </data>
  </layer>
  <layer name="FG2" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBg5QAgN41KDrn6oAGq7dzD5n5ZuIcdcdD3Y+MhuxpX2AOhvAZ8=
+   eJxjYBgZQAgLxqUOXQ8xZg8GQKx7B8o8SgAt3UKqudjcAuILo2FkdbjSHQBOvgH9
   </data>
  </layer>
  <objectgroup name="obj" width="16" height="14">
@@ -23,7 +23,17 @@
  </objectgroup>
  <layer name="col" width="16" height="14" opacity="0.64">
   <data encoding="base64" compression="zlib">
-   eJwTZGBgEKQQkwvQ9StiUYNNDJd+Yu3D535BLOqJtR+fW4nRjw4ImYeun1TzSPUfqfL4gCKJ+nHFFTXSHzlmYEtHRmgYJm6IQz0IAwAAigYi
+   eJwTZGBgEKQQkwvQ9StiUYNNDJd+Yuwi5H5BLHqIMZOQW/HpxwUImYeun1TziPUfufL4gCKJ+nHFFTXSH6lm4EpHRmgYJm6IRw8AV6oGVQ==
+  </data>
+ </layer>
+ <layer name="det" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgZQJVIdSJoekRwKcShZyCBKAN13UJt8ygBg8ktxKYlYvQAAPffAUw=
+  </data>
+ </layer>
+ <layer name="det2" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgZQJQMdSC2CpSthgXDgAoSWw2NjczHBYhRQwxQRXMLqQDdvdQ2jxJAS7dQYi4hMwiZDQBprgQJ
   </data>
  </layer>
 </map>

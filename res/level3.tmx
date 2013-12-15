@@ -5,7 +5,7 @@
  </tileset>
  <layer name="FG" width="16" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYKQQkwtG9VMWrvjUgcSZKNAPA/jMINadTFCMrnYwhT+6OCl60c0gJe8AAH+UAEo=
+   eJxjZGBgYKQQq5GJYfrJBcNFPy5MrH5cYctEpH5sQA1K4zODkDuRzWDCopYYf6L7i1T9+ACusCYl7LGZQUreAQAokwQA
   </data>
  </layer>
  <layer name="FG2" width="16" height="14">
@@ -16,7 +16,7 @@
  <objectgroup name="obj" width="16" height="14">
   <object name="start" x="24" y="177"/>
   <object name="monster" type="0" x="212" y="198"/>
-  <object name="exit" x="25" y="89"/>
+  <object name="exit" x="167" y="198"/>
   <object name="monster" type="2" x="91" y="88"/>
   <object name="monster" type="0" x="105" y="196"/>
   <object name="monster" type="2" x="70" y="86"/>
@@ -24,6 +24,11 @@
  <layer name="col" width="16" height="14" opacity="0.64">
   <data encoding="base64" compression="zlib">
    eJwTZGBgEKQQkwuorV+RRPZgcT8p4Uqs+4lxGyE1pMgTCmNsZg2m8EcXJ0UvDBtCMSl5BwAM1gYB
+  </data>
+ </layer>
+ <layer name="det" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFgxGoDCMzYECEimZRE6D7kRw/kxtOAPLAAO0=
   </data>
  </layer>
 </map>
