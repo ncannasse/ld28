@@ -8,3 +8,6 @@ Day 1:
 19:30-21:00 : break
 21:00-22:00 : sounds (dialogs, menus)
 
+Day 2:
+
+04:30-06:00 : Princess castle, changed wheat, stats display

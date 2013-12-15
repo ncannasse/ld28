@@ -2,8 +2,15 @@ package b;
 
 class Wheat extends Building {
 
+	public var level = 5;
+	
 	public function new() {
 		super(BWheat);
+	}
+	
+	override function update(dt:Float) {
+		if( !visible ) dt *= level / 5;
+		super.update(dt);
 	}
 	
 	override function click() {
@@ -13,10 +20,14 @@ class Wheat extends Building {
 		start(1,function() {
 			if( !game.checkAdd(Wheat) )
 				return;
-			if( !game.has(Seed) )
-				game.add(Seed,true);
-			game.buildings.remove(BWheat);
+			if( !game.has(Seed) && Std.random(3) == 0 )
+				game.add(Seed, true);
+			visible = false;
 			game.world.rebuild(2);
+			start(60, function() {
+				visible = true;
+				game.world.rebuild(2);
+			});
 		});
 		unlock(BTavern);
 	}

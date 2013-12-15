@@ -3,7 +3,8 @@ import Const;
 typedef Action = { item : Item, ?enable : Void -> Bool, text : String, callb : Void -> Void, ?ui : { i : h2d.Interactive, tf : h2d.Text } };
 
 class Building {
-	
+
+	public var visible : Bool = true;
 	public var kind : Const.BuildingKind;
 	var game : Game;
 	var dialog : h2d.Sprite;

@@ -18,6 +18,7 @@ class Texts {
 		case BWoodCutter: [16, 1, 4, 2, 16, 1, 3, 2];
 		case BMiner: [1, 15, 2, 2, 1, 15, 2, 2];
 		case BShop: [18, 4, 4, 2, 19, 4, 2, 2];
+		case BCastle: [9, 6, 3, 4, 9, 6, 3, 4];
 		default: [];
 		}
 	}
@@ -32,6 +33,9 @@ class Texts {
 		case Wood: "Wood";
 		case Ore: "Ore";
 		case Diamond: "Diamond";
+		case Hp: "HP+";
+		case Sword: "Att+";
+		case Shield:" Def+";
 		}
 	}
 	
@@ -46,6 +50,7 @@ class Texts {
 		case BWoodCutter: "Lumbermill";
 		case BMiner: "Mine";
 		case BShop: "Shop";
+		case BCastle: "Princess Castle";
 		}
 	}
 	

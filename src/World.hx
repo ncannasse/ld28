@@ -44,6 +44,7 @@ class World {
 		
 		var bpos = [], bkinds = [];
 		for( b in game.buildings ) {
+			if( !b.visible ) continue;
 			bkinds.push(b.kind);
 			bpos.push(Texts.BUILDPOS(b.kind));
 		}
@@ -83,6 +84,8 @@ class World {
 								case BDungeon:
 									addAnim(1, -1, 1);
 									addAnim(1, 2, 1);
+								case BCastle:
+									addAnim(3, 9/16, 3 + 2/16);
 								default:
 								}
 							}

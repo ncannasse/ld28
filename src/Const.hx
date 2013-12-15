@@ -8,6 +8,7 @@ enum BuildingKind {
 	BWoodCutter;
 	BMiner;
 	BShop;
+	BCastle;
 }
 
 enum Item {
@@ -19,6 +20,10 @@ enum Item {
 	Wood;
 	Ore;
 	Diamond;
+	//
+	Hp;
+	Sword;
+	Shield;
 }
 
 class Const {

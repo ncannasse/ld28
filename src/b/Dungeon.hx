@@ -1,15 +1,15 @@
 package b;
 import Const;
 
-class Dungeon extends Building
-{
+class Dungeon extends Building {
 
-	public var level : Float;
+	var level : Int;
+	var soldiers : Int;
 
 	public function new()
 	{
 		super(BDungeon);
-		level = 0;
+		level = 1;
 	}
 
 	override function getTexts() {
@@ -22,17 +22,23 @@ class Dungeon extends Building
 	
 	
 	override function getActions() : Array<Building.Action> {
+		var progress = soldiers / level;
 		return [{
 			item : Soldier,
-			text : "Level 1"+(level <= 0 || level > 1 ? "" : " "+Std.int(level*100)+"%"),
+			text : "Level "+level+(progress == 0 ? "" : " "+Std.int(progress*100)+"%"),
 			enable : game.has.bind(Soldier),
 			callb : function() {
 				game.use(Soldier);
 				start(15, function() {
-					level += 0.3334;
 					game.checkAdd(Gold);
+					soldiers++;
+					if( soldiers == level ) {
+						level++;
+						soldiers = 0;
+						unlock(BCastle);
+					}
 				});
-				unlock(BBuilder);
+				if( !game.buildings.exists(BCastle) ) unlock(BCastle);
 			},
 		}];
 	}

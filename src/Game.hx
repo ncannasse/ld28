@@ -3,7 +3,7 @@ import Const;
 @:publicFields
 class Game extends hxd.App {
 	
-	public static inline var DEBUG = false;
+	public static inline var DEBUG = true;
 	
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
@@ -16,6 +16,7 @@ class Game extends hxd.App {
 	var invSpr : h2d.Sprite;
 	var updates : Array < { function update(dt:Float) : Void; }>;
 	var curAnnounce : h2d.Sprite;
+	var stats : { life : Float, maxLife : Int, att : Float, def : Float, lifeText : h2d.Text, regen : Float };
 	
 	override function init() {
 		scene = s2d;
@@ -28,7 +29,7 @@ class Game extends hxd.App {
 		
 		var atile = Res.sprites.toTile();
 		anims = [];
-		for( frames in [5,5,5] )
+		for( frames in [5,5,5,4] )
 			anims.push([for( i in 0...frames ) atile.sub(i * 16, anims.length * 16, 16, 16)]);
 		
 		var itemsTile = Res.items.toTile();
@@ -98,6 +99,29 @@ class Game extends hxd.App {
 				tip.visible = false;
 			};
 		}
+		if( stats != null ) {
+			var ico = new h2d.Bitmap(items[Hp.getIndex()], invSpr);
+			ico.x = 238;
+			ico.y = 1;
+			var t = new h2d.Text(font, invSpr);
+			t.text = Std.int(stats.life) + "/" + stats.maxLife;
+			t.x = ico.x + 12;
+			stats.lifeText = t;
+			
+			var ico = new h2d.Bitmap(items[Sword.getIndex()], invSpr);
+			ico.x = 315;
+			ico.y = 1;
+			var t = new h2d.Text(font, invSpr);
+			t.text = ""+Std.int(stats.att);
+			t.x = ico.x + 12;
+
+			var ico = new h2d.Bitmap(items[Shield.getIndex()], invSpr);
+			ico.x = 350;
+			ico.y = 1;
+			var t = new h2d.Text(font, invSpr);
+			t.text = ""+Std.int(stats.def);
+			t.x = ico.x + 12;
+		}
 		invSpr.addChild(tip);
 	}
 	
@@ -133,8 +157,9 @@ class Game extends hxd.App {
 	function announce( t : String, ?icon : Item, ?color : Int ) {
 		var tf = new h2d.Text(font);
 		tf.text = t;
+		tf.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
 		var size =  tf.textWidth + 2 + (icon == null ? 0 : 11);
-		var a = new h2d.Sprite();
+		var a = new h2d.Bitmap(h2d.Tile.fromColor(0x60000000,size,10));
 		a.x = Const.W - size;
 		a.addChild(tf);
 		tf.x = 1;
@@ -145,10 +170,11 @@ class Game extends hxd.App {
 			var ic = new h2d.Bitmap(items[icon.getIndex()], a);
 			ic.x = 0;
 			ic.y = 0;
+			ic.colorKey = 0;
 			tf.x += 11;
 		}
-		s2d.add(a, 3);
-		a.y = Const.H + 10;
+		s2d.add(a, 1);
+		a.y = Const.H;
 		var py = 0.;
 		var s = -1;
 		var w = 0.;
@@ -164,15 +190,27 @@ class Game extends hxd.App {
 				a.remove();
 				u.stop();
 			}
-			a.y = Const.H + 10 + Std.int(py);
+			a.y = Const.H + Std.int(py);
 		};
 		if( curAnnounce != null ) curAnnounce.remove();
 		curAnnounce = a;
 	}
 	
 	function unlockBuilding( b : BuildingKind ) {
-		if( buildings.exists(b) )
+		var bi = buildings.get(b);
+		if( bi != null ) {
+			switch( bi.kind ) {
+			case BWheat:
+				Std.instance(bi, std.b.Wheat).level++;
+				announce("Wheat will grow faster", Wheat, 0xFF00);
+			case BCastle:
+				Std.instance(bi, std.b.Castle).level++;
+				announce("New Castle Level available!", Sword, 0xFF80FF);
+			default:
+			}
+			for( b in buildings ) b.refresh();
 			return;
+		}
 			
 		announce("You got " + Texts.BUILDNAME(b));
 			
@@ -186,6 +224,10 @@ class Game extends hxd.App {
 		case BWoodCutter: new b.WoodCutter();
 		case BMiner: new b.Miner();
 		case BShop: new b.Shop();
+		case BCastle:
+			stats = { life : 100., maxLife : 100, att : 10, def : 10, lifeText : null, regen : 10. };
+			updateInventory();
+			new b.Castle();
 		}
 		buildings.set(b.kind, b);
 		world.rebuild();
@@ -227,6 +269,12 @@ class Game extends hxd.App {
 	}
 	
 	override function update(dt:Float) {
+		if( stats != null ) {
+			var old = Std.int(stats.life);
+			stats.life += stats.regen * dt / 60;
+			if( stats.life > stats.maxLife ) stats.life = stats.maxLife;
+			stats.lifeText.text = Std.int(stats.life) + "/" + stats.maxLife;
+		}
 		for( a in updates )
 			a.update(dt);
 		for( b in buildings )
