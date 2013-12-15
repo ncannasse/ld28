@@ -17,6 +17,7 @@ class Game extends hxd.App {
 	var updates : Array < { function update(dt:Float) : Void; }>;
 	var curAnnounce : h2d.Sprite;
 	var stats : { life : Float, maxLife : Int, att : Float, def : Float, lifeText : h2d.Text, regen : Float };
+	var fight : Fight;
 	
 	override function init() {
 		scene = s2d;
@@ -61,6 +62,7 @@ class Game extends hxd.App {
 				//if( b.getIndex() > BBuilder.getIndex() ) continue;
 				unlockBuilding(b);
 			}
+			new Fight(1);
 		} else {
 			dialog(Texts.WELCOME, Res.sfx.speak00, function() {
 				unlockBuilding(BFarmer);
@@ -79,7 +81,7 @@ class Game extends hxd.App {
 		invSpr = new h2d.Sprite();
 		invSpr.y = Const.H;
 		new h2d.Bitmap(h2d.Tile.fromColor(0xFF000000,Const.W,12), invSpr);
-		s2d.add(invSpr, 2);
+		s2d.add(invSpr, 3);
 		var tip = new h2d.Text(font, invSpr);
 		tip.visible = false;
 		tip.y = -12;
@@ -269,16 +271,17 @@ class Game extends hxd.App {
 	}
 	
 	override function update(dt:Float) {
-		if( stats != null ) {
-			var old = Std.int(stats.life);
-			stats.life += stats.regen * dt / 60;
-			if( stats.life > stats.maxLife ) stats.life = stats.maxLife;
-			stats.lifeText.text = Std.int(stats.life) + "/" + stats.maxLife;
-		}
+		if( fight != null )
+			fight.update(dt);
 		for( a in updates )
 			a.update(dt);
 		for( b in buildings )
 			b.update(dt);
+		if( stats != null ) {
+			if( fight == null ) stats.life += stats.regen * dt / 60;
+			if( stats.life > stats.maxLife ) stats.life = stats.maxLife;
+			stats.lifeText.text = Std.int(stats.life) + (stats.life == stats.maxLife ? "" : "/" + stats.maxLife);
+		}
 	}
 	
 	public static var inst : Game;

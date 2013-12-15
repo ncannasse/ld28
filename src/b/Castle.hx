@@ -6,6 +6,7 @@ class Castle extends Building {
 	
 	public function new() {
 		super(BCastle);
+		if( Game.DEBUG ) level = 1;
 	}
 	
 	override function getTexts() {
@@ -22,7 +23,7 @@ class Castle extends Building {
 			text : "Level " + (level == 0 ? 1 : level),
 			enable : function() return level > 0,
 			callb : function() {
-				
+				new Fight(level);
 			},
 		}];
 	}

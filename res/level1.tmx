@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="16" height="14" tilewidth="16" tileheight="16">
+ <tileset firstgid="1" name="dungeon" tilewidth="16" tileheight="16">
+  <image source="dungeon.png" trans="333333" width="256" height="256"/>
+ </tileset>
+ <layer name="BG" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJx1klEKxTAIBMMa73/l10ICwzz7sVRwuho1a616tB/1+b6KtA/XR86bu8rhS94brOP6iHtgGzWCuAe+5EcFfAbW7ws4x/e97IP+VClfw7/si+y0C/fjN0WerOc905c+3F/kxb58A/a/Hg2uFHt3nP8Wxxvp9T8Pz6WHml/359ln+N/1fWdB7uZ/PGsC/w==
+  </data>
+ </layer>
+ <layer name="Calque de Tile 1" width="16" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYKQQkwtG9Y/qHwz6yTWD0nwDwgBmbAA6
+  </data>
+ </layer>
+ <objectgroup name="obj" width="16" height="14">
+  <object name="start" x="24" y="177"/>
+  <object name="monster" type="0" x="227" y="193"/>
+  <object name="exit" x="228" y="195"/>
+ </objectgroup>
+ <layer name="col" width="16" height="14" opacity="0.64">
+  <data encoding="base64" compression="zlib">
+   eJwTZGBgEKQQkwtG9Y/qHwz6yTWD0nwDwgCVhgPK
+  </data>
+ </layer>
+</map>

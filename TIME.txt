@@ -11,3 +11,4 @@ Day 1:
 Day 2:
 
 04:30-06:00 : Princess castle, changed wheat, stats display
+06:00-08:30 : first fight level and engine complete
