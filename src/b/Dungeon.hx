@@ -3,6 +3,8 @@ import Const;
 
 class Dungeon extends Building {
 
+	static var REQ = [0, 1, 3, 7, 10, 20];
+	
 	var level : Int;
 	var soldiers : Int;
 
@@ -22,8 +24,10 @@ class Dungeon extends Building {
 	
 	
 	override function getActions() : Array<Building.Action> {
-		var progress = soldiers / level;
+		var progress = soldiers / REQ[level];
 		var actions = new Array<Building.Action>();
+		if( level == 6 )
+			return actions;
 		actions.push({
 			item : Soldier,
 			text : "Level "+level+(progress == 0 ? "" : " "+Std.int(progress*100)+"%"),
@@ -32,7 +36,7 @@ class Dungeon extends Building {
 				game.use(Soldier);
 				start(15, function() {
 					soldiers++;
-					if( soldiers == level ) {
+					if( soldiers >= REQ[level] ) {
 						level++;
 						soldiers = 0;
 						unlock(BCastle);
@@ -50,9 +54,9 @@ class Dungeon extends Building {
 				game.use(Knight);
 				start(15, function() {
 					soldiers += 2;
-					if( soldiers >= level ) {
+					if( soldiers >= REQ[level] ) {
 						level++;
-						soldiers -= level;
+						soldiers = 0;
 						unlock(BCastle);
 					}
 				});

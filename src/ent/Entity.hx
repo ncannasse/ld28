@@ -119,14 +119,15 @@ class Entity {
 	public function update(dt:Float) {
 		if( pause ) return;
 		xr += dx*dt/16;
-		dx *= Math.pow(frictX,dt);
-		if( collide(cx-1,cy) && xr<=0.3 ) {
+		dx *= Math.pow(frictX, dt);
+		
+		if( collide(cx-1,cy) && xr<=0.2 ) {
 			dx = 0;
-			xr = 0.3;
+			xr = 0.2;
 		}
-		if( collide(cx+1,cy) && xr>=0.7 ) {
+		if( collide(cx+1,cy) && xr>=0.8 ) {
 			dx = 0;
-			xr = 0.7;
+			xr = 0.8;
 		}
 		while( xr<0 ) {
 			cx--;

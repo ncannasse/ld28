@@ -45,7 +45,19 @@ class Game extends hxd.App {
 			inventory = [true, true, true, true, true, true, true, true];
 			for( b in BuildingKind.createAll() )
 				unlockBuilding(b);
-			//new Fight(2);
+			stats.xp = 1;
+			add(Shoes);
+			stats.att *= 1.5;
+			stats.att *= 1.5;
+			stats.att *= 1.5;
+			stats.att *= 1.5;
+			stats.def *= 1.25;
+			stats.def *= 1.25;
+			stats.def *= 1.25;
+			stats.fireLevel+=2;
+			stats.maxLife += 30 + 40 + 50;
+			stats.life = stats.maxLife;
+			new Fight(5);
 		} else {
 			dialog(Texts.WELCOME, Res.sfx.speak00, function() {
 				unlockBuilding(BFarmer);

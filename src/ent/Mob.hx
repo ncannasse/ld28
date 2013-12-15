@@ -41,19 +41,21 @@ class Mob extends Entity {
 		case Eye:
 			gravity = 0.1;
 			life = 30;
-			power = 10;
+			power = 5;
 			bounce = 5;
 			ch = 8;
 		case Ogre:
 			life = 100;
-			power = 20;
+			power = 10;
 			ch = 13;
 		case Mage:
 			ch = 15;
+			life = 50;
 		case Shot:
+			reload = 600;
 			cw = ch = 4;
 			gravity = 0;
-			power = 0;
+			power = 70;
 			dx = 0.001;
 			angle = Math.atan2(fight.hero.y - y, fight.hero.x - x);
 		}
@@ -89,7 +91,8 @@ class Mob extends Entity {
 			}
 			reload -= dt;
 		case Shot:
-			if( dx == 0 && dy == 0 && speed > 0 ) onCollide(Lava);
+			reload -= dt;
+			if( reload < 0 || (dx == 0 && dy == 0 && speed > 0) ) onCollide(Lava);
 			speed += 0.1 * dt;
 			if( speed > 1 ) speed = 1;
 			dx = Math.cos(angle) * speed * 3;

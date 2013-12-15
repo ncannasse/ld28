@@ -13,6 +13,7 @@ class Builder extends Building {
 			BShop => { item : Wood, n : 3, req : [BWoodCutter, BMiner] },
 			BAcademy => { item : Wood, n : 2, req : [BWoodCutter] },
 			BFisher => { item : Ore, n : 2, req : [BMiner] },
+			BStables => { item : Gold, n : 2, req : [BMiner] },
 		];
 	}
 	

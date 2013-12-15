@@ -22,7 +22,7 @@ class Tavern extends Building {
 			enable : game.has.bind(Wheat),
 			callb : function() {
 				game.use(Wheat);
-				start(6, function() spawn(Beer));
+				start(10, function() spawn(Beer));
 				unlock(BTower);
 			},
 		}];

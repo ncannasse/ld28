@@ -60,7 +60,7 @@ class Texts {
 		case BMiner: "Mine";
 		case BShop: "Shop";
 		case BCastle: "Princess Castle";
-		case BAcademy: "Fight Acamedy";
+		case BAcademy: "Academy";
 		case BStables: "Stables";
 		case BFisher: "Fisherman";
 		}

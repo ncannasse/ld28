@@ -24,7 +24,7 @@ class Tower extends Building {
 			enable : game.has.bind(Beer),
 			callb : function() {
 				game.use(Beer);
-				start(10, function() spawn(Soldier));
+				start(8, function() spawn(Soldier));
 				unlock(BDungeon);
 			},
 		});
