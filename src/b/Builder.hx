@@ -3,14 +3,16 @@ import Const;
 
 class Builder extends Building {
 
-	var buildings : Map< BuildingKind, { item : Item, n : Int, ?req : BuildingKind } >;
+	var buildings : Map< BuildingKind, { item : Item, n : Int, ?req : Array<BuildingKind> } >;
 	
 	public function new() {
 		super(BBuilder);
 		buildings = [
 			BWoodCutter => { item : Gold, n : 1 },
 			BMiner => { item : Gold, n : 2 },
-			BShop => { item : Wood, n : 3, req : BWoodCutter },
+			BShop => { item : Wood, n : 3, req : [BWoodCutter, BMiner] },
+			BAcademy => { item : Wood, n : 2, req : [BWoodCutter] },
+			BFisher => { item : Ore, n : 2, req : [BMiner] },
 		];
 	}
 	
@@ -27,7 +29,15 @@ class Builder extends Building {
 		for( b in buildings.keys() ) {
 			if( game.buildings.exists(b) ) continue;
 			var inf = buildings.get(b);
-			if( inf.req != null && !game.buildings.exists(inf.req) ) continue;
+			if( inf.req != null ) {
+				var ok = true;
+				for( r in inf.req )
+					if( !game.buildings.exists(r) ) {
+						ok = false;
+						break;
+					}
+				if( !ok ) continue;
+			}
 			actions.push({
 				item : inf.item,
 				text : "x" + inf.n + " " + Texts.BUILDNAME(b),

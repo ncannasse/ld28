@@ -8,7 +8,9 @@ class Shop extends Building {
 	public function new() {
 		super(BShop);
 		items = [
-			Diamond => Diamond,
+			Ore => Plow,
+			Diamond => Shoes,
+			Fish => Cucumber,
 		];
 	}
 
@@ -26,11 +28,12 @@ class Shop extends Building {
 			actions.push({
 				item : i,
 				enable : game.has.bind(i),
-				text : "for " + Texts.ITEMNAME(get),
+				text : Texts.ITEMNAME(get),
 				callb : function() {
 					if( !game.checkAdd(get) )
 						return;
 					game.use(i);
+					spawn(get);
 				},
 			});
 		}

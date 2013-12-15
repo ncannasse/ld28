@@ -1,4 +1,5 @@
 Day 1:
+Total = 13h
 
 07:00-10:30 : village tiles and level edit
 10:30-11:20 : village display and dialog text
@@ -13,4 +14,7 @@ Day 2:
 04:30-06:00 : Princess castle, changed wheat, stats display
 06:00-08:30 : first fight level and engine complete
 08:30-10:30 : break
-10:30-12:00 : more fight, 3 monsters, graphics ok, lava
+10:30-13:00 : more fight, 4 monsters, graphics ok, lava
+13:00-13:30 : lunch
+13:30-15:30 : fixed fights, review gameplay loop, academy
+15:30-17:30 : fisher, stables, complete content?

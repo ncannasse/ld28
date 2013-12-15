@@ -17,11 +17,12 @@ class Wheat extends Building {
 		if( pending != null )
 			return;
 		Res.sfx.confirm.play();
-		start(1,function() {
+		start(1, function() {
 			if( !game.checkAdd(Wheat) )
 				return;
+			spawn(Wheat);
 			if( !game.has(Seed) && Std.random(3) == 0 )
-				game.add(Seed, true);
+				haxe.Timer.delay(spawn.bind(Seed), 1500);
 			visible = false;
 			game.world.rebuild(2);
 			start(60, function() {

@@ -9,6 +9,9 @@ enum BuildingKind {
 	BMiner;
 	BShop;
 	BCastle;
+	BAcademy;
+	BStables;
+	BFisher;
 }
 
 enum Item {
@@ -20,10 +23,17 @@ enum Item {
 	Wood;
 	Ore;
 	Diamond;
+	Plow;
+	Horse;
+	Knight;
+	Shoes;
+	Fish;
+	Cucumber;
 	//
 	Hp;
 	Sword;
 	Shield;
+	Unknown;
 }
 
 class Const {

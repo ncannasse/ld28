@@ -16,17 +16,30 @@ class Tower extends Building {
 		];
 	}
 	
-	override function getActions() : Array<Building.Action> {
-		return [{
+	override function getActions() {
+		var actions = new Array<Building.Action>();
+		actions.push({
 			item : Beer,
 			text : "Recruit",
 			enable : game.has.bind(Beer),
 			callb : function() {
 				game.use(Beer);
-				start(10, function() game.checkAdd(Soldier));
+				start(10, function() spawn(Soldier));
 				unlock(BDungeon);
 			},
-		}];
+		});
+		if( game.buildings.exists(BStables) ) {
+			actions.push({
+				item : Horse,
+				text : "Recruit Knight",
+				enable : game.has.bind(Horse),
+				callb : function() {
+					game.use(Horse);
+					start(5, function() spawn(Knight));
+				},
+			});
+		}
+		return actions;
 	}
 	
 	

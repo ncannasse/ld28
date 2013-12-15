@@ -3,6 +3,8 @@ import Const;
 
 class Miner extends Building {
 
+	var count = 0;
+	
 	public function new() {
 		super(BMiner);
 	}
@@ -21,7 +23,7 @@ class Miner extends Building {
 			item : null,
 			text : "Mine Ore",
 			callb : function() {
-				start(40, function() game.checkAdd(Std.random(10) == 0 && !game.has(Diamond) ? Diamond : Ore));
+				start(40, function() { spawn(count % 3 == 2 ? Diamond : Ore); count++; });
 			},
 		}];
 	}

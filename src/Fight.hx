@@ -73,6 +73,7 @@ class Fight {
 					case "start":
 						hero = new ent.Hero(0, o.x / 16, o.y / 16);
 					case "monster":
+						if( game.stats.xp == 0 && o.y < 100 ) continue;
 						new ent.Mob(MOBS[Std.parseInt(o.type)], o.x / 16, o.y / 16);
 					case "exit":
 						exit = new ent.Exit(4, o.x / 16, o.y / 16);
@@ -141,7 +142,7 @@ class Fight {
 		if( root.parent == null ) return;
 		root.remove();
 		game.fight = null;
-		if( win ) game.announce("Level " + level + " completed !", Sword, 0xFF00) else game.announce("Try again after healing", Sword, 0xFF0000);
+		Std.instance(game.buildings.get(BCastle), b.Castle).endFight(this.level,win);
 	}
 	
 	public function update(dt:Float) {

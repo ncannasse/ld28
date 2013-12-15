@@ -4,6 +4,7 @@ import Const;
 class Game extends hxd.App {
 	
 	public static inline var DEBUG = true;
+	public static inline var ADMIN = true;
 	
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
@@ -16,8 +17,9 @@ class Game extends hxd.App {
 	var invSpr : h2d.Sprite;
 	var updates : Array < { function update(dt:Float) : Void; }>;
 	var curAnnounce : h2d.Sprite;
-	var stats : { life : Float, maxLife : Int, att : Float, def : Float, lifeText : h2d.Text, regen : Float };
+	var stats : { life : Float, maxLife : Int, att : Float, def : Float, lifeText : h2d.Text, regen : Float, xp : Int, fireLevel : Int };
 	var fight : Fight;
+	var knownItems : Array<Bool>;
 	
 	override function init() {
 		scene = s2d;
@@ -34,41 +36,26 @@ class Game extends hxd.App {
 			anims.push([for( i in 0...frames ) atile.sub(i * 16, anims.length * 16, 16, 16)]);
 		
 		var itemsTile = Res.items.toTile();
-		items = [for( i in 0...16 ) itemsTile.sub(i * 10, 0, 10, 10)];
+		items = [for( i in 0...Unknown.getIndex()+1 ) itemsTile.sub(i * 10, 0, 10, 10)];
 		
+		knownItems = [true];
 		inventory = [true];
-		updateInventory();
 	
-		/*
-		var iall = new h2d.Interactive(Const.W, Const.H - 8);
-		iall.y = 8;
-		iall.onClick = function(e:hxd.Event) {
-			if( curDialog != null && curDialog.parent == null ) curDialog = null;
-			if( curDialog != null )
-				curDialog.click();
-			else
-				e.propagate = true;
-		}
-		iall.onOver = function(e) { e.cancel = true; e.propagate = true; }
-		iall.onOut = function(e) { e.cancel = true; e.propagate = true; }
-		iall.onMove = function(e) { e.cancel = true; e.propagate = true; }
-		s2d.add(iall, 2);
-		*/
-
 		if( DEBUG ) {
-			inventory = [true, true, true, true, true, true, true];
-			updateInventory();
-			for( b in BuildingKind.createAll() ) {
-				//if( b.getIndex() > BBuilder.getIndex() ) continue;
+			inventory = [true, true, true, true, true, true, true, true];
+			for( b in BuildingKind.createAll() )
 				unlockBuilding(b);
-			}
-			new Fight(4);
+			//new Fight(2);
 		} else {
 			dialog(Texts.WELCOME, Res.sfx.speak00, function() {
 				unlockBuilding(BFarmer);
 				Res.sfx.done.play();
 			});
 		}
+
+		while( inventory.length < Sword.getIndex() )
+			inventory.push(false);
+		updateInventory();
 		
 		world.onClickBuilding = function(b) {
 			var bd = buildings.get(b);
@@ -87,9 +74,16 @@ class Game extends hxd.App {
 		tip.y = -12;
 		tip.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
 		for( i in 0...inventory.length ) {
-			if( !inventory[i] ) continue;
+			if( !inventory[i] ) {
+				if( !knownItems[i] ) {
+					var s = new h2d.Bitmap(items[Unknown.getIndex()], invSpr);
+					s.x = i * 13;
+					s.y = 1;
+				}
+				continue;
+			}
 			var s = new h2d.Bitmap(items[i], invSpr);
-			s.x = i * 12;
+			s.x = i * 13;
 			s.y = 1;
 			var int = new h2d.Interactive(8, 8, s);
 			int.onOver = function(_) {
@@ -105,7 +99,7 @@ class Game extends hxd.App {
 			if( !inventory[i] ) continue;
 			var o = new h2d.Bitmap(Res.one.toTile(), invSpr);
 			o.colorKey = 0;
-			o.x = i * 12 + 8;
+			o.x = i * 13 + 8;
 			o.y = 7;
 		}
 
@@ -144,7 +138,6 @@ class Game extends hxd.App {
 			announce("You already got one " + Texts.ITEMNAME(i), i, 0xFF0000);
 			return false;
 		}
-		add(i);
 		return true;
 	}
 	
@@ -214,7 +207,7 @@ class Game extends hxd.App {
 				Std.instance(bi, std.b.Wheat).level++;
 				announce("Wheat will grow faster", Wheat, 0xFF00);
 			case BCastle:
-				Std.instance(bi, std.b.Castle).level++;
+				Std.instance(bi, std.b.Castle).maxLevel++;
 				announce("New Castle Level available!", Sword, 0xFF80FF);
 			default:
 			}
@@ -235,9 +228,12 @@ class Game extends hxd.App {
 		case BMiner: new b.Miner();
 		case BShop: new b.Shop();
 		case BCastle:
-			stats = { life : 100., maxLife : 100, att : 10, def : 10, lifeText : null, regen : 10. };
+			stats = { life : 100., maxLife : 100, att : 10, def : 10, lifeText : null, regen : 5., xp : 0, fireLevel : 0 };
 			updateInventory();
 			new b.Castle();
+		case BAcademy: new b.Academy();
+		case BStables: new b.Stables();
+		case BFisher: new b.Fisher();
 		}
 		buildings.set(b.kind, b);
 		world.rebuild();
@@ -281,6 +277,8 @@ class Game extends hxd.App {
 	override function update(dt:Float) {
 		if( fight != null )
 			fight.update(dt);
+		if( Game.ADMIN && hxd.Key.isDown(hxd.Key.SHIFT) )
+			dt *= 10;
 		for( a in updates )
 			a.update(dt);
 		for( b in buildings )

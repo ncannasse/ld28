@@ -11,7 +11,9 @@
  <objectgroup name="obj" width="16" height="14">
   <object name="start" x="24" y="177"/>
   <object name="monster" type="0" x="227" y="193"/>
-  <object name="exit" x="228" y="195"/>
+  <object name="exit" x="226" y="193"/>
+  <object name="monster" type="0" x="24" y="27"/>
+  <object name="monster" type="0" x="120" y="86"/>
  </objectgroup>
  <layer name="col" width="16" height="14" opacity="0.64">
   <data encoding="base64" compression="zlib">

@@ -19,7 +19,9 @@ class Texts {
 		case BMiner: [1, 15, 2, 2, 1, 15, 2, 2];
 		case BShop: [18, 4, 4, 2, 19, 4, 2, 2];
 		case BCastle: [9, 6, 5, 4, 9, 6, 3, 4];
-		default: [];
+		case BAcademy: [0, 1, 7, 3, 1, 1, 4, 3];
+		case BStables: [0, 8, 3, 2, 0, 8, 3, 2];
+		case BFisher: [19, 14, 2, 3, 19, 14, 2, 2];
 		}
 	}
 	
@@ -36,6 +38,13 @@ class Texts {
 		case Hp: "HP+";
 		case Sword: "Att+";
 		case Shield:" Def+";
+		case Plow: "Farm Plow";
+		case Horse: "Horse";
+		case Knight: "Knight";
+		case Shoes: "Shoes";
+		case Unknown: "???";
+		case Fish: "Fish";
+		case Cucumber: "Cucumber";
 		}
 	}
 	
@@ -51,6 +60,9 @@ class Texts {
 		case BMiner: "Mine";
 		case BShop: "Shop";
 		case BCastle: "Princess Castle";
+		case BAcademy: "Fight Acamedy";
+		case BStables: "Stables";
+		case BFisher: "Fisherman";
 		}
 	}
 	

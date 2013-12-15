@@ -16,8 +16,9 @@ class Farmer extends Building {
 		];
 	}
 	
-	override function getActions() : Array<Building.Action> {
-		return [{
+	override function getActions() {
+		var actions = new Array<Building.Action>();
+		actions.push({
 			item : Seed,
 			text : "Plant Seed",
 			enable : game.has.bind(Seed),
@@ -25,7 +26,24 @@ class Farmer extends Building {
 				game.use(Seed);
 				start(4, function() game.unlockBuilding(BWheat));
 			},
-		}];
+		});
+		if( game.buildings.exists(BShop) ) {
+			actions.push( {
+				item : Plow,
+				text : "Use Plow",
+				enable : game.has.bind(Plow),
+				callb : function() {
+					game.use(Plow);
+					start(4, function() {
+						var b = game.buildings.get(BWheat);
+						if( !b.visible && b.pending != null )
+							b.pending.time = 0;
+						game.unlockBuilding(BWheat);
+					});
+				}
+			});
+		}
+		return actions;
 	}
 	
 }

@@ -37,10 +37,12 @@ class Mob extends Entity {
 		case Rat:
 			power = 3;
 			ch = 8;
+			dy = gravity;
 		case Eye:
 			gravity = 0.1;
 			life = 30;
 			power = 10;
+			bounce = 5;
 			ch = 8;
 		case Ogre:
 			life = 100;
@@ -57,9 +59,7 @@ class Mob extends Entity {
 		}
 	}
 	
-	override function onCollide(col:Fight.Collide) {
-//		if( col == Block && kind == Shot )
-//			return super.onCollide(Lava);
+	override function onCollide(col) {
 		return super.onCollide(col);
 	}
 		
@@ -67,13 +67,9 @@ class Mob extends Entity {
 		super.update(dt);
 		switch( kind ) {
 		case Rat:
-			if( dx == 0 ) dir *= -1;
-			dx = dir * 2;
+			if( dx == 0 && dy == 0 ) dir *= -1;
+			if( dy == 0 ) dx = dir * 2;
 		case Eye:
-			if( dy == 0 ) {
-				gravity *= -1;
-				dy = -gravity;
-			}
 			if( Math.abs(dx) < 0.5 ) {
 				dx = ((Math.random() * 2) - 1) * 3;
 				dir = dx < 0 ? -1 : 1;

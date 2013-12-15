@@ -2,11 +2,15 @@ package b;
 
 class Castle extends Building {
 
-	public var level : Int = 0;
+	public var maxLevel : Int = 0;
+	var wonLevel : Int;
 	
 	public function new() {
 		super(BCastle);
-		if( Game.DEBUG ) level = 1;
+		if( Game.DEBUG ) {
+			maxLevel = 4;
+			wonLevel = 4;
+		}
 	}
 	
 	override function getTexts() {
@@ -17,14 +21,31 @@ class Castle extends Building {
 		];
 	}
 	
-	override function getActions() : Array<Building.Action> {
-		return [ {
-			item : Sword,
-			text : "Level " + (level == 0 ? 1 : level),
-			enable : function() return level > 0,
-			callb : function() {
-				new Fight(level);
-			},
-		}];
+	public function endFight( level : Int, win : Bool ) {
+		if( win ) {
+			if( level > wonLevel ) wonLevel = level;
+			spawn(Gold);
+			game.unlockBuilding(BBuilder);
+			game.stats.xp++;
+		} else {
+			game.announce("Try again after healing", Sword, 0xFF0000);
+		}
 	}
+	
+	override function getActions() {
+		var actions = new Array<Building.Action>();
+		for( i in 0...(maxLevel == 0 ? 1 : maxLevel) ) {
+			var level = i + 1;
+			actions.push({
+				item : Sword,
+				text : "Level " + level,
+				enable : function() return maxLevel >= level && wonLevel >= level - 1,
+				callb : function() {
+					new Fight(level);
+				},
+			});
+		}
+		return actions;
+	}
+	
 }

@@ -23,14 +23,14 @@ class Dungeon extends Building {
 	
 	override function getActions() : Array<Building.Action> {
 		var progress = soldiers / level;
-		return [{
+		var actions = new Array<Building.Action>();
+		actions.push({
 			item : Soldier,
 			text : "Level "+level+(progress == 0 ? "" : " "+Std.int(progress*100)+"%"),
 			enable : game.has.bind(Soldier),
 			callb : function() {
 				game.use(Soldier);
 				start(15, function() {
-					game.checkAdd(Gold);
 					soldiers++;
 					if( soldiers == level ) {
 						level++;
@@ -40,7 +40,25 @@ class Dungeon extends Building {
 				});
 				if( !game.buildings.exists(BCastle) ) unlock(BCastle);
 			},
-		}];
+		});
+		// tease
+		actions.push({
+			item : Knight,
+			text : "Level "+level+(progress == 0 ? "" : " "+Std.int(progress*100)+"%"),
+			enable : game.has.bind(Knight),
+			callb : function() {
+				game.use(Knight);
+				start(15, function() {
+					soldiers += 2;
+					if( soldiers >= level ) {
+						level++;
+						soldiers -= level;
+						unlock(BCastle);
+					}
+				});
+			},
+		});
+		return actions;
 	}
 	
 }

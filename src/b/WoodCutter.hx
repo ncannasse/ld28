@@ -20,7 +20,7 @@ class WoodCutter extends Building {
 			item : null,
 			text : "Cut Wood",
 			callb : function() {
-				start(30, function() game.checkAdd(Wood));
+				start(30, function() spawn(Wood));
 			},
 		}];
 	}

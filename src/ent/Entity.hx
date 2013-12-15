@@ -9,6 +9,7 @@ class Entity {
 	var gravity : Float = 0.2;
 	var frictX = 0.85;
 	var frictY = 0.94;
+	var bounce = 0.;
 	var bw : Int;
 	var bh : Int;
 	
@@ -113,7 +114,10 @@ class Entity {
 		mc.currentFrame = 0;
 	}
 
+	var pause : Bool;
+	
 	public function update(dt:Float) {
+		if( pause ) return;
 		xr += dx*dt/16;
 		dx *= Math.pow(frictX,dt);
 		if( collide(cx-1,cy) && xr<=0.3 ) {
@@ -138,18 +142,23 @@ class Entity {
 		ca.y *= 0.5;
 		ca.z *= 0.5;
 
+		dy *= Math.pow(frictY, dt);
 		dy += gravity * dt;
 		yr += dy*dt/16;
-		dy *= Math.pow(frictY, dt);
 		
-		if( collide(cx, cy-1) && yr <= ch / 32 ) {
-			if( dy < 0 ) dy = -0.01;
+		if( collide(cx, cy - 1) && yr <= ch / 32 ) {
+			if( dy < 0 )
+				dy = Math.abs(dy) * bounce + 0.01;
 			yr = ch/32;
 		}
-		if( collide(cx,cy+1) && yr >= 1 - ch/32 ) {
-			dy = 0;
-			yr = 1 - ch/32;
+		if( collide(cx, cy + 1) && yr >= 1 - ch / 32 ) {
+			dy = -Math.abs(dy) * bounce;
+			yr = 1 - ch / 32;
 		}
+		
+		if( Math.abs(dy) > 7 )
+			dy = dy > 0 ? 7 : -7;
+		
 		while( yr<0 ) {
 			cy--;
 			yr++;
