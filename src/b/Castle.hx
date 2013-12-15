@@ -27,7 +27,10 @@ class Castle extends Building {
 			spawn(Gold);
 			game.unlockBuilding(BBuilder);
 			game.stats.xp++;
+			if( wonLevel == 5 ) game.victory();
+			Res.sfx.won.play();
 		} else {
+			Res.sfx.lost.play();
 			game.announce("Try again after healing", Sword, 0xFF0000);
 		}
 	}

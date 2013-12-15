@@ -10,6 +10,7 @@ Total = 13h
 21:00-22:00 : sounds (dialogs, menus)
 
 Day 2:
+Total = 14h30
 
 04:30-06:00 : Princess castle, changed wheat, stats display
 06:00-08:30 : first fight level and engine complete
@@ -20,4 +21,7 @@ Day 2:
 15:30-17:30 : fisher, stables, complete content?
 17:30-18:30 : tuning / balancing fight
 18:30-19:00 : music (arg)
-19:00 : break
+19:00-20:30 : diner
+20:30-23:00 : final boss, title screen, testing, balancing, completed sfx
+
+TOTAL = 27h30

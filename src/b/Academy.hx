@@ -41,6 +41,7 @@ class Academy extends Building {
 				start(10,function() {
 					game.stats.att *= 1.5;
 					game.announce("Max attack has increased to " + Std.int(game.stats.att), Sword, 0xFFFF00);
+					game.updateInventory();
 				});
 			},
 		});
@@ -54,6 +55,7 @@ class Academy extends Building {
 				start(10,function() {
 					game.stats.def *= 1.25;
 					game.announce("Max defense has increased to " + Std.int(game.stats.def), Shield, 0xFFFF00);
+					game.updateInventory();
 				});
 			},
 		});

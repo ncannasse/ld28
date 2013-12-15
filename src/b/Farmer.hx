@@ -37,7 +37,7 @@ class Farmer extends Building {
 					start(4, function() {
 						var b = game.buildings.get(BWheat);
 						if( !b.visible && b.pending != null )
-							b.pending.time = 0;
+							b.pending.time = b.pending.max;
 						game.unlockBuilding(BWheat);
 					});
 				}

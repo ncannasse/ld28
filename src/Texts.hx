@@ -7,6 +7,27 @@ class Texts {
 		"You only have left one wheat seed...\nWill that be enough to finish the game?",
 	];
 	
+	public static var VICTORY = [
+		"The Mighty Princess has defeated the Evil",
+		"And she was able to rescue her Hero.",
+		"",
+		"Due to long days spend in prison he had lost some weight",
+		"The Princess was quite happy about that",
+		"",
+		"She spent the rest of her life living happy",
+		"With her Hero",
+		"",
+		"She only had one from the beginning",
+		"",
+		"Her only love",
+		"",
+		"",
+		"",
+		"",
+		"",
+		"Fin",
+	];
+	
 	public static function BUILDPOS(b:BuildingKind) {
 		return switch( b ) {
 		case BFarmer: [21, 8, 3, 2, 21, 8, 2, 2];
@@ -45,6 +66,7 @@ class Texts {
 		case Unknown: "???";
 		case Fish: "Fish";
 		case Cucumber: "Cucumber";
+		case Amulet: "Pendant";
 		}
 	}
 	

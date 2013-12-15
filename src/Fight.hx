@@ -34,7 +34,7 @@ class Fight {
 		
 		anims = [];
 		var et = Res.entities.toTile();
-		for( frames in [3,2,3,3,4,4,2,5,4,4,4] )
+		for( frames in [3,2,3,3,4,4,2,5,4,4,4,4] )
 			anims.push([for( i in 0...frames ) et.sub(i * 16, anims.length * 16, 16, 16, -8, -16)]);
 			
 		entities = [];

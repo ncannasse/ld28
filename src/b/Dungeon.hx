@@ -3,7 +3,7 @@ import Const;
 
 class Dungeon extends Building {
 
-	static var REQ = [0, 1, 3, 7, 10, 20];
+	static var REQ = [0, 1, 3, 5, 10, 15];
 	
 	var level : Int;
 	var soldiers : Int;

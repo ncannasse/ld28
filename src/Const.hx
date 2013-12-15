@@ -29,6 +29,7 @@ enum Item {
 	Shoes;
 	Fish;
 	Cucumber;
+	Amulet;
 	//
 	Hp;
 	Sword;

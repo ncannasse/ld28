@@ -5,6 +5,7 @@ enum Kind {
 	Eye;
 	Ogre;
 	Mage;
+	Boss;
 	Shot;
 }
 
@@ -16,8 +17,10 @@ class Mob extends Entity {
 		Ogre => 6,
 		Mage => 9,
 		Shot => 10,
+		Boss => 11,
 	];
 	
+	var active : Bool;
 	var kind : Kind;
 	var dir : Int;
 	var power : Float = 1.;
@@ -40,9 +43,9 @@ class Mob extends Entity {
 			dy = gravity;
 		case Eye:
 			gravity = 0.1;
-			life = 30;
+			life = 15;
 			power = 5;
-			bounce = 5;
+			bounce = 4;
 			ch = 8;
 		case Ogre:
 			life = 100;
@@ -58,6 +61,10 @@ class Mob extends Entity {
 			power = 70;
 			dx = 0.001;
 			angle = Math.atan2(fight.hero.y - y, fight.hero.x - x);
+		case Boss:
+			life = 600;
+			power = 30;
+			gravity = 0.3;
 		}
 	}
 	
@@ -73,14 +80,16 @@ class Mob extends Entity {
 			if( dy == 0 ) dx = dir * 2;
 		case Eye:
 			if( Math.abs(dx) < 0.5 ) {
-				dx = ((Math.random() * 2) - 1) * 3;
+				dx = ((Math.random() * 2) - 1) * 2.5;
 				dir = dx < 0 ? -1 : 1;
 			}
 		case Ogre:
 			if( target == null || dx == 0 || Math.random() < 0.01 * dt )
 				target = { x : fight.hero.x, y : fight.hero.y };
-			if( dy == 0 && Math.random() < 0.1 * dt )
+			if( dy == 0 && Math.random() < 0.1 * dt ) {
+				Res.sfx.jump.play();
 				dy = -5;
+			}
 			dx = target.x < x ? -0.5 : 0.5;
 		case Mage:
 			if( Math.random() < 0.1 * dt )
@@ -88,6 +97,7 @@ class Mob extends Entity {
 			if( Math.random() < 0.01 * dt && reload < 0 ) {
 				reload = 10;
 				new Mob(Shot, x, y - 0.4);
+				Res.sfx.fire.play();
 			}
 			reload -= dt;
 		case Shot:
@@ -97,6 +107,28 @@ class Mob extends Entity {
 			if( speed > 1 ) speed = 1;
 			dx = Math.cos(angle) * speed * 3;
 			dy = Math.sin(angle) * speed * 3;
+		case Boss:
+			if( !active ) {
+				reload -= dt;
+				if( reload < 0 ) {
+					reload += (0.5 + Math.random()) * 60;
+					new Mob(Rat, x, y);
+					Res.sfx.fire.play();
+				}
+				var d = hxd.Math.distance(x - fight.hero.x, y - fight.hero.y);
+				if( d < 5 ) {
+					Res.sfx.boss.play();
+					active = true;
+				}
+			} else {
+				if( target == null || dx == 0 || Math.random() < 0.01 * dt )
+					target = { x : fight.hero.x, y : fight.hero.y };
+				if( dy == 0 && Math.random() < 0.1 * dt ) {
+					Res.sfx.jump.play();
+					dy = -5;
+				}
+				dx = target.x < x ? -0.5 : 0.5;
+			}
 		}
 		mc.scaleX = -dir;
 		if( colWith(fight.hero) ) {

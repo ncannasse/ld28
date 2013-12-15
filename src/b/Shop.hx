@@ -7,11 +7,6 @@ class Shop extends Building {
 	
 	public function new() {
 		super(BShop);
-		items = [
-			Ore => Plow,
-			Diamond => Shoes,
-			Fish => Cucumber,
-		];
 	}
 
 	override function getTexts() {
@@ -23,6 +18,14 @@ class Shop extends Building {
 	
 	override function getActions() {
 		var actions = new Array<Building.Action>();
+		var items = [
+			Ore => Plow,
+			Fish => Cucumber,
+		];
+		if( !game.has(Shoes) )
+			items[Diamond] = Shoes;
+		else if( !game.has(Amulet) )
+			items[Diamond] = Amulet;
 		for( i in items.keys() ) {
 			var get = items.get(i);
 			actions.push({

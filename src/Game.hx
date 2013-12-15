@@ -3,8 +3,8 @@ import Const;
 @:publicFields
 class Game extends hxd.App {
 	
-	public static inline var DEBUG = true;
-	public static inline var ADMIN = true;
+	public static inline var DEBUG = false;
+	public static inline var ADMIN = false;
 	
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
@@ -46,18 +46,10 @@ class Game extends hxd.App {
 			for( b in BuildingKind.createAll() )
 				unlockBuilding(b);
 			stats.xp = 1;
-			add(Shoes);
-			stats.att *= 1.5;
-			stats.att *= 1.5;
-			stats.att *= 1.5;
-			stats.att *= 1.5;
 			stats.def *= 1.25;
-			stats.def *= 1.25;
-			stats.def *= 1.25;
-			stats.fireLevel+=2;
-			stats.maxLife += 30 + 40 + 50;
+			stats.maxLife += 30;
 			stats.life = stats.maxLife;
-			new Fight(5);
+			new Fight(2);
 		} else {
 			dialog(Texts.WELCOME, Res.sfx.speak00, function() {
 				unlockBuilding(BFarmer);
@@ -65,13 +57,67 @@ class Game extends hxd.App {
 			});
 		}
 
-		while( inventory.length < Sword.getIndex() )
+		while( inventory.length < Hp.getIndex() )
 			inventory.push(false);
 		updateInventory();
 		
 		world.onClickBuilding = function(b) {
 			var bd = buildings.get(b);
 			if( bd != null ) bd.click();
+		};
+	}
+	
+	function victory() {
+		var bg = new h2d.Bitmap(Res.victory.toTile());
+		s2d.add(bg, 5);
+		bg.alpha = 0;
+		var i = new h2d.Interactive(1000, 1000, bg);
+		var u = new Update();
+		var anims = [];
+		var e = Res.entities.toTile();
+		var f = [for( i in 0...10 ) e.sub((i & 1) * 16, 16, 16, 16)];
+		for( i in 0...3 )
+			f.push(e.sub(i * 16, 32, 16, 16));
+		var mask = new h2d.Mask(400, 100, bg);
+		mask.y = Const.H - mask.height;
+		var text = new h2d.Sprite(mask);
+		var py = 0;
+		for( line in Texts.VICTORY ) {
+			var l = new h2d.Text(font, text);
+			l.text = line;
+			l.x = Std.int((Const.W - l.textWidth) * 0.5);
+			l.y = py;
+			py += 10;
+		}
+		var credits = new h2d.Text(font, bg);
+		credits.text = "(C)2013 @ncannasse, made in 48h for LD#28";
+		credits.y = Const.H;
+		credits.x = 5;
+		text.y = 100;
+		u.update = function(dt) {
+			if( bg.alpha < 0.8 )
+				bg.alpha += 0.004 * dt;
+			else {
+				if( text.y > -150 )
+					text.y -= 0.1 * dt;
+				else
+					credits.visible = true;
+				if( Math.random() < 0.1 ) {
+					var a = new h2d.Anim(bg);
+					a.play(f);
+					a.speed = 15;
+					a.loop = false;
+					a.x = 10 + Std.random(350);
+					a.y = 10 + Std.random(280);
+					a.colorKey = 0x333333;
+					anims.push(a);
+				}
+				for( a in anims )
+					if( a.currentFrame + 0.01 > a.frames.length ) {
+						a.remove();
+						anims.remove(a);
+					}
+			}
 		};
 	}
 	
@@ -147,6 +193,7 @@ class Game extends hxd.App {
 	
 	function checkAdd( i : Item ) {
 		if( has(i) ) {
+			Res.sfx.cancel.play();
 			announce("You already got one " + Texts.ITEMNAME(i), i, 0xFF0000);
 			return false;
 		}
@@ -156,7 +203,9 @@ class Game extends hxd.App {
 	function add(i:Item,silent=false) {
 		if( has(i) ) throw "assert";
 		if( !silent ) announce("You got " + Texts.ITEMNAME(i), i);
+		Res.sfx.item.play();
 		inventory[i.getIndex()] = true;
+		knownItems[i.getIndex()] = true;
 		updateInventory();
 		for( b in buildings )
 			b.refresh();
@@ -228,6 +277,8 @@ class Game extends hxd.App {
 		}
 			
 		announce("You got " + Texts.BUILDNAME(b));
+		Res.sfx.confirm.stop();
+		Res.sfx.build.play();
 			
 		var b = switch( b ) {
 		case BFarmer: new b.Farmer();
@@ -296,7 +347,7 @@ class Game extends hxd.App {
 		for( b in buildings )
 			b.update(dt);
 		if( stats != null ) {
-			if( fight == null ) stats.life += stats.regen * dt / 60;
+			if( fight == null ) stats.life += stats.regen * (has(Amulet) ? 5 : 1) * dt / 60;
 			if( stats.life > stats.maxLife ) stats.life = stats.maxLife;
 			stats.lifeText.text = Std.int(stats.life) + (stats.life == stats.maxLife ? "" : "/" + stats.maxLife);
 		}
@@ -305,7 +356,7 @@ class Game extends hxd.App {
 	public static var inst : Game;
 	static function main() {
 		Res.loader = new hxd.res.Loader(hxd.res.EmbedFileSystem.create( { compressSounds : true } ));
-		inst = new Game();
+		new Title();
 	}
 	
 }

@@ -53,7 +53,13 @@ class Entity {
 		return Math.abs(x - e.x) < (cw + e.cw) / 32 && Math.abs( e.y - y ) < (ch + e.ch) / 32;
 	}
 	
+	static var lastHit = 0.;
+	
 	public function hit( power : Float ) {
+		if( haxe.Timer.stamp() - lastHit > 0.2 ) {
+			Res.sfx.hit.play();
+			lastHit = haxe.Timer.stamp();
+		}
 		mc.colorAdd.set(1, -0.5, -0.5, 0);
 		life -= power;
 		if( life <= 0 ) {
@@ -63,6 +69,7 @@ class Entity {
 	}
 
 	function kill() {
+		if( id == 11 ) Res.sfx.boss.play() else if( id > 0 ) Res.sfx.kill.play();
 		life = 0;
 		remove();
 	}
@@ -85,6 +92,7 @@ class Entity {
 	
 	function onCollide(col:Fight.Collide) {
 		if( col == Lava ) {
+			if( id == 11 ) return true;
 			new Fx(7, x, y);
 			kill();
 		}
