@@ -33,6 +33,7 @@ class Hero extends Entity {
 		}
 		if( dy == 0 && (K.isDown(K.UP) || K.isDown("Z".code) || K.isDown("W".code)) ) {
 			dy = -3 * (fight.game.has(Shoes) ? 2 : 1);
+			if( dt > 3 ) dy -= dt / 4;
 			Res.sfx.jump2.play();
 		}
 		if( K.isDown(K.SPACE) && reload < 0 ) {
