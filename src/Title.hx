@@ -12,8 +12,9 @@ class Title extends hxd.App {
 		bg.scale(2);
 		var b1 = new h2d.Bitmap(Res.title.toTile(), bg);
 		b = new h2d.Bitmap(Res.title2.toTile(), bg);
-		b.alphaMap = Res.clouds.toTile();
-		b.color = new h3d.Vector(0.4, 0.4, 0.4, 1);
+		//b.addShader(new h3d.shader.AlphaMap()).setTile(Res.clouds.toTile());
+		b.color.set(0.4, 0.4, 0.4, 1);
+		b.addShader(new h3d.shader.ColorMatrix());
 		var t = new h2d.Bitmap(Res.titleText.toTile(), s2d);
 		t.x = -40;
 		t.y = -70;
@@ -42,14 +43,14 @@ class Title extends hxd.App {
 		m.identity();
 		m.colorContrast(-0.4);
 		m.colorBrightness(-0.2);
-		b.colorMatrix = m;
+		b.getShader(h3d.shader.ColorMatrix).matrix = m;
 		var a = time * 0.005;
 		var px = Std.int(Math.cos(a) * Const.W * 0.5);
 		var py = Std.int(Math.sin(a) * (Const.H - 30) * 0.5);
 		bg.x = -(px + (Const.W >> 1));
 		bg.y = -(py + (Const.H >> 1));
-		b.alphaMap.scrollDiscrete( -0.6, 0.2);
-		b.alphaMap.getTexture().wrap = Repeat;
+		//b.alphaMap.scrollDiscrete( -0.6, 0.2);
+		//b.alphaMap.getTexture().wrap = Repeat;
 	}
 	
 }

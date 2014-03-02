@@ -4,7 +4,7 @@ import Const;
 class Game extends hxd.App {
 	
 	public static inline var DEBUG = false;
-	public static inline var ADMIN = false;
+	public static inline var ADMIN = true;
 	
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
@@ -130,7 +130,7 @@ class Game extends hxd.App {
 		var tip = new h2d.Text(font, invSpr);
 		tip.visible = false;
 		tip.y = -12;
-		tip.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
+		tip.dropShadow = { x : 0, y : 1, color : 0, alpha : 0.5 };
 		for( i in 0...inventory.length ) {
 			if( !inventory[i] ) {
 				if( !knownItems[i] ) {
@@ -221,7 +221,7 @@ class Game extends hxd.App {
 	function announce( t : String, ?icon : Item, ?color : Int ) {
 		var tf = new h2d.Text(font);
 		tf.text = t;
-		tf.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
+		tf.dropShadow = { x : 0, y : 1, color : 0, alpha : 0.5 };
 		var size =  tf.textWidth + 2 + (icon == null ? 0 : 11);
 		var a = new h2d.Bitmap(h2d.Tile.fromColor(0x60000000,size,10));
 		a.x = Const.W - size;

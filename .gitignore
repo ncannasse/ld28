@@ -1,2 +1,4 @@
 *.swf
 res/.tmp
+/main.js
+/main.js.map

@@ -10,7 +10,7 @@ class World {
 	var layers : Map < String, { name : String, data : Array<Int>, g : h2d.TileGroup, alpha : Float } > ;
 	var tiles : Array<h2d.Tile>;
 	
-	public function new( r : hxd.res.TiledMap, tiles : hxd.res.Texture )  {
+	public function new( r : hxd.res.TiledMap, tiles : hxd.res.Image )  {
 		game = Game.inst;
 		map = r.toMap();
 		root = new h2d.Sprite();

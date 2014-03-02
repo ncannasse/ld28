@@ -26,7 +26,7 @@ class Dialog extends h2d.Sprite {
 		tf = new h2d.Text(game.font, this);
 		tf.y = 5;
 		tf.x = 7;
-		tf.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.3 };
+		tf.dropShadow = { x : 0, y : 1, color : 0, alpha : 0.3 };
 		int = new h2d.Interactive(0,0,this);
 		int.onClick = function(_) click();
 		this.width = width;

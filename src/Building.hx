@@ -9,7 +9,7 @@ class Building {
 	var game : Game;
 	var dialog : h2d.Sprite;
 	var actions : Array<Action>;
-	public var clickCount : Int;
+	public var clickCount : Int = 0;
 	public var pending : {
 		time : Float,
 		max : Float,
@@ -155,12 +155,12 @@ class Building {
 		var int = new h2d.Interactive(spr.width, spr.height, spr);
 		int.onOver = function(_) {
 			if( a.enable() ) {
-				spr.color = new h3d.Vector(1.2, 1.2, 1.2);
+				spr.color.set(1.2, 1.2, 1.2);
 				Res.sfx.menu.play();
 			}
 		};
 		int.onOut = function(_) {
-			spr.color = null;
+			spr.color.set(1,1,1);
 		};
 		int.onClick = function(_) {
 			if( a.enable() ) {

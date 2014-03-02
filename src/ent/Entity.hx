@@ -29,12 +29,13 @@ class Entity {
 	public var dx			: Float;
 	public var dy			: Float;
 
+	var colorAdd : h3d.shader.ColorAdd;
 	
 	public function new(id,x,y) {
 		this.id = id;
 		fight = Fight.inst;
 		mc = new h2d.Anim(fight.sprites);
-		mc.colorAdd = new h3d.Vector(0, 0, 0, 0);
+		colorAdd = mc.addShader(new h3d.shader.ColorAdd());
 		bw = 4;
 		bh = 16;
 		
@@ -60,7 +61,7 @@ class Entity {
 			Res.sfx.hit.play();
 			lastHit = haxe.Timer.stamp();
 		}
-		mc.colorAdd.set(1, -0.5, -0.5, 0);
+		colorAdd.color.set(1, -0.5, -0.5, 0);
 		life -= power;
 		if( life <= 0 ) {
 			life = 0;
@@ -146,7 +147,7 @@ class Entity {
 			xr--;
 		}
 		
-		var ca = mc.colorAdd;
+		var ca = colorAdd.color;
 		ca.x *= 0.5;
 		ca.y *= 0.5;
 		ca.z *= 0.5;

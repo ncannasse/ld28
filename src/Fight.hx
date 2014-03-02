@@ -1,3 +1,9 @@
+#if h3d
+import h2d.TileColorGroup;
+#else
+typedef TileColorGroup = h2d.TileGroup;
+#end
+
 enum Collide {
 	No;
 	Block;
@@ -19,7 +25,7 @@ class Fight {
 	public var exit : ent.Exit;
 	public var col : Array<Array<Collide>>;
 	public var entities : Array<ent.Entity>;
-	var scroll : h2d.TileColorGroup;
+	var scroll : TileColorGroup;
 	
 	public function new(level) {
 		inst = this;
@@ -55,7 +61,7 @@ class Fight {
 		height = map.height;
 
 		var mask = new h2d.Mask(16 * 16, 14 * 16, root);
-		scroll = new h2d.TileColorGroup(t, mask);
+		scroll = new h2d.TileGroup(t, mask);
 		for( x in 0...width )
 			for( y in 0...height ) {
 				var l = 0.2 + ((x+y)&1) * 0.1;

@@ -3,7 +3,7 @@ package b;
 class Castle extends Building {
 
 	public var maxLevel : Int = 0;
-	var wonLevel : Int;
+	var wonLevel : Int = 0;
 	
 	public function new() {
 		super(BCastle);
