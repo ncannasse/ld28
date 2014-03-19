@@ -2,7 +2,7 @@
 -swf ld28.swf
 -swf-header 768:600:60:FFFFFF
 --flash-strict
--swf-version 11.6
+-swf-version 11.8
 -main Game
 -lib h3d
 -dce full
