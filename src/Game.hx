@@ -2,10 +2,10 @@ import Const;
 
 @:publicFields
 class Game extends hxd.App {
-	
+
 	public static inline var DEBUG = false;
 	public static inline var ADMIN = false;
-	
+
 	public var scene : h2d.Scene;
 	public var font : h2d.Font;
 	public var world : World;
@@ -20,7 +20,7 @@ class Game extends hxd.App {
 	var stats : { life : Float, maxLife : Int, att : Float, def : Float, lifeText : h2d.Text, regen : Float, xp : Int, fireLevel : Int };
 	var fight : Fight;
 	var knownItems : Array<Bool>;
-	
+
 	override function init() {
 		scene = s2d;
 		updates = [];
@@ -29,18 +29,18 @@ class Game extends hxd.App {
 		world = new World(Res.map, Res.tiles);
 		s2d.add(world.root, 0);
 		font = Res.Minecraftia.build(8, { antiAliasing : false } );
-		
+
 		var atile = Res.sprites.toTile();
 		anims = [];
 		for( frames in [5,5,5,4,4,4] )
 			anims.push([for( i in 0...frames ) atile.sub(i * 16, anims.length * 16, 16, 16)]);
-		
+
 		var itemsTile = Res.items.toTile();
 		items = [for( i in 0...Unknown.getIndex()+1 ) itemsTile.sub(i * 10, 0, 10, 10)];
-		
+
 		knownItems = [true];
 		inventory = [true];
-	
+
 		if( DEBUG ) {
 			inventory = [true, true, true, true, true, true, true, true];
 			for( b in BuildingKind.createAll() )
@@ -60,13 +60,13 @@ class Game extends hxd.App {
 		while( inventory.length < Hp.getIndex() )
 			inventory.push(false);
 		updateInventory();
-		
+
 		world.onClickBuilding = function(b) {
 			var bd = buildings.get(b);
 			if( bd != null ) bd.click();
 		};
 	}
-	
+
 	function victory() {
 		var bg = new h2d.Bitmap(Res.victory.toTile());
 		s2d.add(bg, 5);
@@ -120,7 +120,7 @@ class Game extends hxd.App {
 			}
 		};
 	}
-	
+
 	function updateInventory() {
 		if( invSpr != null ) invSpr.remove();
 		invSpr = new h2d.Sprite();
@@ -169,7 +169,7 @@ class Game extends hxd.App {
 			t.text = Std.int(stats.life) + "/" + stats.maxLife;
 			t.x = ico.x + 12;
 			stats.lifeText = t;
-			
+
 			var ico = new h2d.Bitmap(items[Sword.getIndex()], invSpr);
 			ico.x = 315;
 			ico.y = 1;
@@ -186,11 +186,11 @@ class Game extends hxd.App {
 		}
 		invSpr.addChild(tip);
 	}
-	
+
 	function has(i:Item) {
 		return inventory[i.getIndex()];
 	}
-	
+
 	function checkAdd( i : Item ) {
 		if( has(i) ) {
 			Res.sfx.cancel.play();
@@ -199,7 +199,7 @@ class Game extends hxd.App {
 		}
 		return true;
 	}
-	
+
 	function add(i:Item,silent=false) {
 		if( has(i) ) throw "assert";
 		if( !silent ) announce("You got " + Texts.ITEMNAME(i), i);
@@ -210,14 +210,14 @@ class Game extends hxd.App {
 		for( b in buildings )
 			b.refresh();
 	}
-	
+
 	function use(i:Item) {
 		if( !inventory[i.getIndex()] )
 			throw "assert";
 		inventory[i.getIndex()] = false;
 		updateInventory();
 	}
-	
+
 	function announce( t : String, ?icon : Item, ?color : Int ) {
 		var tf = new h2d.Text(font);
 		tf.text = t;
@@ -259,7 +259,7 @@ class Game extends hxd.App {
 		if( curAnnounce != null ) curAnnounce.remove();
 		curAnnounce = a;
 	}
-	
+
 	function unlockBuilding( b : BuildingKind ) {
 		var bi = buildings.get(b);
 		if( bi != null ) {
@@ -275,11 +275,11 @@ class Game extends hxd.App {
 			for( b in buildings ) b.refresh();
 			return;
 		}
-			
+
 		announce("You got " + Texts.BUILDNAME(b));
 		Res.sfx.confirm.stop();
 		Res.sfx.build.play();
-			
+
 		var b = switch( b ) {
 		case BFarmer: new b.Farmer();
 		case BWheat: new b.Wheat();
@@ -301,7 +301,7 @@ class Game extends hxd.App {
 		buildings.set(b.kind, b);
 		world.rebuild();
 	}
-	
+
 	function newPanel(w, h) {
 		var g = new h2d.ScaleGrid(Res.ui.toTile(), 5, 5);
 		g.width = w;
@@ -310,7 +310,7 @@ class Game extends hxd.App {
 		scene.add(g, 1);
 		return g;
 	}
-	
+
 	function removeDialog() {
 		if( curDialog != null ) {
 			curDialog.remove();
@@ -318,7 +318,7 @@ class Game extends hxd.App {
 		}
 	}
 
-	
+
 	function dialog( t : Array<String>, sfx, ?onDone ) {
 		if( t.length == 0 ) {
 			if( onDone != null )
@@ -336,7 +336,7 @@ class Game extends hxd.App {
 		};
 		curDialog = d;
 	}
-	
+
 	override function update(dt:Float) {
 		if( fight != null )
 			fight.update(dt);
@@ -349,14 +349,15 @@ class Game extends hxd.App {
 		if( stats != null ) {
 			if( fight == null ) stats.life += stats.regen * (has(Amulet) ? 5 : 1) * dt / 60;
 			if( stats.life > stats.maxLife ) stats.life = stats.maxLife;
-			stats.lifeText.text = Std.int(stats.life) + (stats.life == stats.maxLife ? "" : "/" + stats.maxLife);
+			var txt = Std.int(stats.life) + (stats.life == stats.maxLife ? "" : "/" + stats.maxLife);
+			stats.lifeText.text = txt;
 		}
 	}
-	
+
 	public static var inst : Game;
 	static function main() {
-		Res.loader = new hxd.res.Loader(hxd.res.EmbedFileSystem.create( { compressSounds : true } ));
+		hxd.Res.initEmbed( { compressSounds : true } );
 		new Title();
 	}
-	
+
 }

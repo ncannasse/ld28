@@ -9,15 +9,12 @@ class Dialog extends h2d.Sprite {
 	public var height(default, set) : Int;
 	public var text(default, set) : String;
 	var textPos : Int;
-	var sfx : hxd.res.Sound;
-	
+	var chan : hxd.snd.Channel;
+
 	public function new(width:Int, height:Int, text : String,sfx:hxd.res.Sound) {
 		super();
-		this.sfx = sfx;
-		if( sfx != null ) {
-			sfx.loop = true;
-			sfx.play();
-		}
+		if( sfx != null )
+			chan = sfx.play(true);
 		if( text == null ) text = "NULL";
 		game = Game.inst;
 		game.scene.add(this, 1);
@@ -33,41 +30,41 @@ class Dialog extends h2d.Sprite {
 		this.height = height;
 		this.text = text;
 	}
-	
+
 	override function onDelete() {
 		super.onDelete();
-		if( sfx != null )
-			sfx.stop();
+		if( chan != null )
+			chan.stop();
 		timer.stop();
 	}
-	
+
 	function updateText() {
 		if( textPos == text.length ) {
 			timer.stop();
 			onReady();
-			if( sfx != null ) sfx.stop();
+			if( chan != null ) chan.stop();
 			return;
 		}
-		if( sfx != null ) {
+		if( chan != null ) {
 			switch( text.charCodeAt(textPos) ) {
-			case " ".code, "\n".code: sfx.volume = 0;
-			default: if( sfx.volume == 0 ) sfx.volume = 1 else sfx.volume *= 0.9;
+			case " ".code, "\n".code: chan.volume = 0;
+			default: if( chan.volume == 0 ) chan.volume = 1 else chan.volume *= 0.9;
 			}
 		}
 		textPos++;
 		tf.text = text.substr(0, textPos);
 	}
-	
+
 	public function click() {
 		if( textPos == text.length ) onClick() else if( textPos < text.length ) { textPos = text.length; tf.text = text; updateText(); };
 	}
-	
+
 	public dynamic function onClick() {
 	}
-	
+
 	public dynamic function onReady() {
 	}
-	
+
 	function set_text(t) {
 		text = t;
 		timer = new haxe.Timer(30);
@@ -76,7 +73,7 @@ class Dialog extends h2d.Sprite {
 		textPos = 0;
 		return t;
 	}
-	
+
 	function set_width(w) {
 		bg.width = w;
 		int.width = w;
@@ -84,11 +81,11 @@ class Dialog extends h2d.Sprite {
 		tf.text = text;
 		return width = w;
 	}
-	
+
 	function set_height(h) {
 		bg.height = h;
 		int.height = h;
 		return height = h;
 	}
-	
+
 }

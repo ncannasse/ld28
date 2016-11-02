@@ -4,5 +4,5 @@
 --flash-strict
 -swf-version 11.8
 -main Game
--lib h3d
+-lib heaps
 -dce full

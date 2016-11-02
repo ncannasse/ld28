@@ -7,7 +7,7 @@ enum Collide {
 class Fight {
 
 	public static var inst : Fight;
-	
+
 	public var root : h2d.Sprite;
 	public var sprites : h2d.Sprite;
 	var level : Int;
@@ -19,8 +19,8 @@ class Fight {
 	public var exit : ent.Exit;
 	public var col : Array<Array<Collide>>;
 	public var entities : Array<ent.Entity>;
-	var scroll : h2d.TileColorGroup;
-	
+	var scroll : h2d.TileGroup;
+
 	public function new(level) {
 		inst = this;
 		this.level = level;
@@ -28,26 +28,26 @@ class Fight {
 		sprites = new h2d.Sprite();
 		game = Game.inst;
 		game.fight = this;
-		
+
 		root.x = 4 * 16;
 		root.y = 2 * 16;
-		
+
 		anims = [];
 		var et = Res.entities.toTile();
 		for( frames in [3,2,3,3,4,4,2,5,4,4,4,4] )
 			anims.push([for( i in 0...frames ) et.sub(i * 16, anims.length * 16, 16, 16, -8, -16)]);
-			
+
 		entities = [];
-		
+
 		var bg = new h2d.Bitmap(h2d.Tile.fromColor(0xC0000000, 1000, 1000),root);
 		bg.x = -200;
 		bg.y = -200;
 		var i = new h2d.Interactive(1000, 1000, bg);
 		i.cursor = Default;
-		
-		
+
+
 		game.scene.add(root, 2);
-		
+
 		var t = Res.dungeon.toTile();
 		var tiles = [for( y in 0...t.height >> 4 ) for( x in 0...t.width >> 4 ) t.sub(x * 16, y * 16, 16, 16)];
 		var map = Res.load("level" + level + ".tmx").toTiledMap().toMap();
@@ -55,7 +55,7 @@ class Fight {
 		height = map.height;
 
 		var mask = new h2d.Mask(16 * 16, 14 * 16, root);
-		scroll = new h2d.TileColorGroup(t, mask);
+		scroll = new h2d.TileGroup(t, mask);
 		for( x in 0...width )
 			for( y in 0...height ) {
 				var l = 0.2 + ((x+y)&1) * 0.1;
@@ -63,7 +63,7 @@ class Fight {
 			}
 
 		col = [for( x in 0...width ) [for( y in 0...height ) No]];
-		
+
 		var MOBS = Type.allEnums(ent.Mob.Kind);
 		for( l in map.layers ) {
 			var pos = 0;
@@ -129,7 +129,7 @@ class Fight {
 		entities.unshift(hero);
 		hero.life = game.stats.life;
 		root.addChild(sprites);
-		
+
 		var g = new h2d.ScaleGrid(Res.fightUI.toTile(), 5, 5);
 		g.width = width * 16 + 2;
 		g.height = height * 16 + 2;
@@ -137,14 +137,14 @@ class Fight {
 		g.colorKey = 0xFF00FF;
 		root.addChild(g);
 	}
-	
+
 	public function end( win : Bool ) {
 		if( root.parent == null ) return;
 		root.remove();
 		game.fight = null;
 		Std.instance(game.buildings.get(BCastle), b.Castle).endFight(this.level,win);
 	}
-	
+
 	public function update(dt:Float) {
 		if( Game.DEBUG && hxd.Key.isDown(hxd.Key.SHIFT) )
 			dt *= 0.1;
@@ -158,5 +158,5 @@ class Fight {
 		if( !hasMonster && exit != null )
 			exit.open();
 	}
-	
+
 }

@@ -22,23 +22,23 @@ class Building {
 		this.kind = kind;
 		this.game = Game.inst;
 	}
-	
+
 	function getActions() : Array<Action> {
 		return [];
 	}
-	
+
 	function unlock(b) {
 		game.unlockBuilding(b);
 	}
-	
+
 	function getTexts() {
 		return ["NO INTRO", "NO TEXT"];
 	}
-	
+
 	function spawn( i : Item ) {
 		var it = new h2d.Bitmap(game.items[i.getIndex()]);
 		game.scene.add(it, 5);
-		
+
 		it.colorKey = 0;
 
 		var pos = Texts.BUILDPOS(kind);
@@ -90,25 +90,25 @@ class Building {
 			it.y = Std.int((y + Math.sin(time * 0.5)) * 2) / 2;
 		};
 	}
-	
+
 	function start(time, callb ) {
 		if( pending != null ) throw "assert";
-		
+
 		var mc = new h2d.Sprite();
 		var bg = new h2d.Bitmap(h2d.Tile.fromColor(0xC0000000, 34, 4), mc);
 		new h2d.Bitmap(h2d.Tile.fromColor(0xFFFF0000, 32, 2), mc);
 		bg.x = bg.y = -1;
 		var bar = new h2d.Bitmap(h2d.Tile.fromColor(0xFF00FF00,1,2), mc);
 		var pos = Texts.BUILDPOS(kind);
-		
-		
+
+
 		game.world.root.addChild(mc);
 		mc.x = (pos[4] * 16 + pos[6] * 8) - 16;
 		mc.y = pos[5] * 16;
-		
+
 		if( kind == BWheat )
 			mc.y += 16;
-				
+
 		pending = {
 			time : 0.,
 			max : time,
@@ -117,7 +117,7 @@ class Building {
 			bar : bar,
 		};
 	}
-	
+
 	public function update(dt:Float) {
 		if( pending != null ) {
 			pending.time += (dt / 60) * (Game.DEBUG ? 10 : 1);
@@ -131,10 +131,10 @@ class Building {
 			}
 		}
 	}
-	
+
 	function done() {
 	}
-	
+
 	function addAction( a : Action ) {
 		var spr = game.newPanel(100, 20);
 		dialog.addChild(spr);
@@ -155,12 +155,12 @@ class Building {
 		var int = new h2d.Interactive(spr.width, spr.height, spr);
 		int.onOver = function(_) {
 			if( a.enable() ) {
-				spr.color = new h3d.Vector(1.2, 1.2, 1.2);
+				spr.color.set(1.2, 1.2, 1.2);
 				Res.sfx.menu.play();
 			}
 		};
 		int.onOut = function(_) {
-			spr.color = null;
+			spr.color.set(1,1,1);
 		};
 		int.onClick = function(_) {
 			if( a.enable() ) {
@@ -176,7 +176,7 @@ class Building {
 		actions.push(a);
 		return spr;
 	}
-	
+
 	public function refresh() {
 		if( actions == null ) return;
 		for( a in actions ) {
@@ -189,7 +189,7 @@ class Building {
 			}
 		}
 	}
-	
+
 	public function click() {
 		if( pending != null )
 			return;
@@ -231,5 +231,5 @@ class Building {
 		clickCount++;
 		game.curDialog = dialog;
 	}
-	
+
 }
