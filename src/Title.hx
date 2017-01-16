@@ -44,7 +44,7 @@ class Title extends hxd.App {
 		var m = new h3d.Matrix();
 		m.identity();
 		m.colorContrast(-0.4);
-		m.colorBrightness(-0.2);
+		m.colorLightness(-0.2);
 		b.colorMatrix = m;
 		var a = time * 0.005;
 		var px = Std.int(Math.cos(a) * Const.W * 0.5);
