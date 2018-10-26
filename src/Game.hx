@@ -10,13 +10,13 @@ class Game extends hxd.App {
 	public var font : h2d.Font;
 	public var world : World;
 	public var buildings : Map<BuildingKind,Building>;
-	public var curDialog : h2d.Sprite;
+	public var curDialog : h2d.Object;
 	public var inventory : Array<Bool>;
 	var anims : Array<Array<h2d.Tile>>;
 	var items : Array<h2d.Tile>;
-	var invSpr : h2d.Sprite;
+	var invSpr : h2d.Object;
 	var updates : Array < { function update(dt:Float) : Void; }>;
-	var curAnnounce : h2d.Sprite;
+	var curAnnounce : h2d.Object;
 	var stats : { life : Float, maxLife : Int, att : Float, def : Float, lifeText : h2d.Text, regen : Float, xp : Int, fireLevel : Int };
 	var fight : Fight;
 	var knownItems : Array<Bool>;
@@ -28,7 +28,7 @@ class Game extends hxd.App {
 		s2d.setFixedSize(Const.W, Const.H + 12);
 		world = new World(Res.map, Res.tiles);
 		s2d.add(world.root, 0);
-		font = Res.Minecraftia.build(8, { antiAliasing : false } );
+		font = Res.minecraftia_regular_6.toFont();
 
 		var atile = Res.sprites.toTile();
 		anims = [];
@@ -80,7 +80,7 @@ class Game extends hxd.App {
 			f.push(e.sub(i * 16, 32, 16, 16));
 		var mask = new h2d.Mask(400, 100, bg);
 		mask.y = Const.H - mask.height;
-		var text = new h2d.Sprite(mask);
+		var text = new h2d.Object(mask);
 		var py = 0;
 		for( line in Texts.VICTORY ) {
 			var l = new h2d.Text(font, text);
@@ -123,9 +123,9 @@ class Game extends hxd.App {
 
 	function updateInventory() {
 		if( invSpr != null ) invSpr.remove();
-		invSpr = new h2d.Sprite();
+		invSpr = new h2d.Object();
 		invSpr.y = Const.H;
-		new h2d.Bitmap(h2d.Tile.fromColor(0xFF000000,Const.W,12), invSpr);
+		new h2d.Bitmap(h2d.Tile.fromColor(0,Const.W,12), invSpr);
 		s2d.add(invSpr, 3);
 		var tip = new h2d.Text(font, invSpr);
 		tip.visible = false;
@@ -223,7 +223,7 @@ class Game extends hxd.App {
 		tf.text = t;
 		tf.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
 		var size =  tf.textWidth + 2 + (icon == null ? 0 : 11);
-		var a = new h2d.Bitmap(h2d.Tile.fromColor(0x60000000,size,10));
+		var a = new h2d.Bitmap(h2d.Tile.fromColor(0,size,10,0x60/255));
 		a.x = Const.W - size;
 		a.addChild(tf);
 		tf.x = 1;
@@ -338,6 +338,7 @@ class Game extends hxd.App {
 	}
 
 	override function update(dt:Float) {
+		dt *= 60;
 		if( fight != null )
 			fight.update(dt);
 		if( Game.ADMIN && hxd.Key.isDown(hxd.Key.SHIFT) )

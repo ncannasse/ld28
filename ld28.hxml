@@ -1,8 +1,5 @@
 -cp src
--swf ld28.swf
--swf-header 768:600:60:FFFFFF
---flash-strict
--swf-version 11.8
+-js ld28.js
 -main Game
 -lib heaps
 -dce full

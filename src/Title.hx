@@ -1,6 +1,6 @@
 class Title extends hxd.App {
 
-	var bg : h2d.Sprite;
+	var bg : h2d.Object;
 	var time = 0.;
 	var b : h2d.Bitmap;
 	var start : h2d.Text;
@@ -9,7 +9,7 @@ class Title extends hxd.App {
 
 	override function init() {
 		s2d.setFixedSize(Const.W, Const.H + 12);
-		bg = new h2d.Sprite(s2d);
+		bg = new h2d.Object(s2d);
 		bg.scale(2);
 		var b1 = new h2d.Bitmap(Res.title.toTile(), bg);
 		b = new h2d.Bitmap(Res.title2.toTile(), bg);
@@ -20,7 +20,7 @@ class Title extends hxd.App {
 		var t = new h2d.Bitmap(Res.titleText.toTile(), s2d);
 		t.x = -40;
 		t.y = -70;
-		start = new h2d.Text(Res.Minecraftia.build(8, { antiAliasing : false } ), s2d);
+		start = new h2d.Text(Res.minecraftia_regular_6.toFont(), s2d);
 		start.text = "Click to Start";
 		start.x = Std.int((Const.W - start.textWidth) * 0.5);
 		start.y = 250;
@@ -30,11 +30,12 @@ class Title extends hxd.App {
 		i.onRelease = function(_) {
 			Res.sfx.confirm.play();
 			i.remove();
-			Game.inst = new Game(engine);
+			Game.inst = new Game();
 		};
 	}
 
-	override function update(dt) {
+	override function update(dt:Float) {
+		dt *= 60;
 		time += dt;
 		stime += dt;
 		if( stime > 30 ) {

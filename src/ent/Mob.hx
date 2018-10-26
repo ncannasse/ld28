@@ -19,16 +19,16 @@ class Mob extends Entity {
 		Shot => 10,
 		Boss => 11,
 	];
-	
+
 	var active : Bool;
 	var kind : Kind;
-	var dir : Int;
+	var dir : Int = 0;
 	var power : Float = 1.;
 	var speed : Float = 0.;
 	var target : { x : Float, y : Float };
 	var angle : Float;
 	var reload = 0.;
-	
+
 	public function new(kind, x, y) {
 		this.kind = kind;
 		super(ANIMS[kind], x, y);
@@ -67,11 +67,11 @@ class Mob extends Entity {
 			gravity = 0.3;
 		}
 	}
-	
+
 	override function onCollide(col) {
 		return super.onCollide(col);
 	}
-		
+
 	override function update( dt : Float ) {
 		super.update(dt);
 		switch( kind ) {
@@ -136,5 +136,5 @@ class Mob extends Entity {
 			if( kind == Shot ) onCollide(Lava);
 		}
 	}
-	
+
 }

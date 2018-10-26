@@ -6,14 +6,14 @@ class World {
 	var map : hxd.res.TiledMap.TiledMapData;
 	public var width : Int;
 	public var height : Int;
-	public var root : h2d.Sprite;
+	public var root : h2d.Object;
 	var layers : Map < String, { name : String, data : Array<Int>, g : h2d.TileGroup, alpha : Float } > ;
 	var tiles : Array<h2d.Tile>;
 
 	public function new( r : hxd.res.TiledMap, tiles : hxd.res.Image )  {
 		game = Game.inst;
 		map = r.toMap();
-		root = new h2d.Sprite();
+		root = new h2d.Object();
 		width = map.width;
 		height = map.height;
 		var t = tiles.toTile();
@@ -62,7 +62,7 @@ class World {
 					}
 					inline function addAnim(n, dx:Float, dy:Float, speed = 1.0) {
 						var a = new h2d.Anim(g);
-						a.frames = game.anims[n];
+						a.play(game.anims[n]);
 						a.x = (x + dx) * 16;
 						a.y = (y + dy) * 16;
 						a.colorKey = 0x1D8700;

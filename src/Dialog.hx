@@ -1,4 +1,4 @@
-class Dialog extends h2d.Sprite {
+class Dialog extends h2d.Object {
 
 	var game : Game;
 	var bg : h2d.ScaleGrid;
@@ -8,7 +8,7 @@ class Dialog extends h2d.Sprite {
 	public var width(default, set) : Int;
 	public var height(default, set) : Int;
 	public var text(default, set) : String;
-	var textPos : Int;
+	var textPos : Int = 0;
 	var chan : hxd.snd.Channel;
 
 	public function new(width:Int, height:Int, text : String,sfx:hxd.res.Sound) {
@@ -31,8 +31,8 @@ class Dialog extends h2d.Sprite {
 		this.text = text;
 	}
 
-	override function onDelete() {
-		super.onDelete();
+	override function onRemove() {
+		super.onRemove();
 		if( chan != null )
 			chan.stop();
 		timer.stop();

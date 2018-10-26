@@ -4,9 +4,9 @@ import Const;
 class Dungeon extends Building {
 
 	static var REQ = [0, 1, 3, 5, 10, 15];
-	
-	var level : Int;
-	var soldiers : Int;
+
+	var level : Int = 0;
+	var soldiers : Int = 0;
 
 	public function new()
 	{
@@ -21,8 +21,8 @@ class Dungeon extends Building {
 			"You can hear screams. Human ones.",
 		];
 	}
-	
-	
+
+
 	override function getActions() : Array<Building.Action> {
 		var progress = soldiers / REQ[level];
 		var actions = new Array<Building.Action>();
@@ -64,5 +64,5 @@ class Dungeon extends Building {
 		});
 		return actions;
 	}
-	
+
 }

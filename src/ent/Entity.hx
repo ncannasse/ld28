@@ -1,7 +1,7 @@
 package ent;
 
 class Entity {
-	
+
 	public var id : Int;
 	public var x(get,never) : Float;
 	public var y(get,never) : Float;
@@ -12,24 +12,24 @@ class Entity {
 	var bounce = 0.;
 	var bw : Int;
 	var bh : Int;
-	
+
 	var cw = 16;
 	var ch = 16;
-	
+
 	var fight : Fight;
-	
+
 	public var life : Float = 0.;
-	
+
 	// using deepnight tuto :-)
 	public var cx			: Int;
 	public var cy			: Int;
 	public var xr			: Float;
 	public var yr			: Float;
-	
+
 	public var dx			: Float;
 	public var dy			: Float;
 
-	
+
 	public function new(id,x,y) {
 		this.id = id;
 		fight = Fight.inst;
@@ -37,7 +37,7 @@ class Entity {
 		mc.colorAdd = new h3d.Vector(0, 0, 0, 0);
 		bw = 4;
 		bh = 16;
-		
+
 		//mc.addChild(new h2d.Bitmap(h2d.Tile.fromColor(0xFFFFFFFF)));
 		setPos(x, y);
 
@@ -48,13 +48,13 @@ class Entity {
 		init();
 		update(0);
 	}
-	
+
 	function colWith( e : Entity ) {
 		return Math.abs(x - e.x) < (cw + e.cw) / 32 && Math.abs( e.y - y ) < (ch + e.ch) / 32;
 	}
-	
+
 	static var lastHit = 0.;
-	
+
 	public function hit( power : Float ) {
 		if( haxe.Timer.stamp() - lastHit > 0.2 ) {
 			Res.sfx.hit.play();
@@ -73,10 +73,10 @@ class Entity {
 		life = 0;
 		remove();
 	}
-	
+
 	function init() {
 	}
-	
+
 	public function setPos(x, y) {
 		cx = Std.int(x);
 		cy = Std.int(y);
@@ -89,7 +89,7 @@ class Entity {
 		mc.remove();
 		fight.entities.remove(this);
 	}
-	
+
 	function onCollide(col:Fight.Collide) {
 		if( col == Lava ) {
 			if( id == 11 ) return true;
@@ -98,7 +98,7 @@ class Entity {
 		}
 		return true;
 	}
-	
+
 	function collide(cx, cy) {
 		return cx < 0 || cy < 0 || cx >= fight.width || cy >= fight.height || switch( fight.col[cx][cy] ) {
 		case No: false;
@@ -106,29 +106,28 @@ class Entity {
 		case col: onCollide(col);
 		}
 	}
-	
+
 	inline function get_x() {
 		return cx + xr;
 	}
-	
+
 	inline function get_y() {
 		return cy + yr;
 	}
-	
+
 	function playAnim(id) {
 		var a = fight.anims[id];
 		if( a == null ) throw "Missing anim " + id;
-		mc.frames = a;
-		mc.currentFrame = 0;
+		mc.play(a, 0);
 	}
 
 	var pause : Bool;
-	
+
 	public function update(dt:Float) {
 		if( pause ) return;
 		xr += dx*dt/16;
 		dx *= Math.pow(frictX, dt);
-		
+
 		if( collide(cx-1,cy) && xr<=0.2 ) {
 			dx = 0;
 			xr = 0.2;
@@ -145,7 +144,7 @@ class Entity {
 			cx++;
 			xr--;
 		}
-		
+
 		var ca = mc.colorAdd;
 		ca.x *= 0.5;
 		ca.y *= 0.5;
@@ -154,7 +153,7 @@ class Entity {
 		dy *= Math.pow(frictY, dt);
 		dy += gravity * dt;
 		yr += dy*dt/16;
-		
+
 		if( collide(cx, cy - 1) && yr <= ch / 32 ) {
 			if( dy < 0 )
 				dy = Math.abs(dy) * bounce + 0.01;
@@ -164,10 +163,10 @@ class Entity {
 			dy = -Math.abs(dy) * bounce;
 			yr = 1 - ch / 32;
 		}
-		
+
 		if( Math.abs(dy) > 7 )
 			dy = dy > 0 ? 7 : -7;
-		
+
 		while( yr<0 ) {
 			cy--;
 			yr++;
@@ -180,5 +179,5 @@ class Entity {
 		mc.x = Std.int(x*16);
 		mc.y = Std.int(y*16 + (ch>>1) + 1);
 	}
-	
+
 }

@@ -7,15 +7,15 @@ class Building {
 	public var visible : Bool = true;
 	public var kind : Const.BuildingKind;
 	var game : Game;
-	var dialog : h2d.Sprite;
+	var dialog : h2d.Object;
 	var actions : Array<Action>;
-	public var clickCount : Int;
+	public var clickCount : Int = 0;
 	public var pending : {
 		time : Float,
 		max : Float,
 		callb : Void -> Void,
-		mc : h2d.Sprite,
-		bar : h2d.Sprite,
+		mc : h2d.Object,
+		bar : h2d.Object,
 	};
 
 	public function new(kind) {
@@ -94,11 +94,11 @@ class Building {
 	function start(time, callb ) {
 		if( pending != null ) throw "assert";
 
-		var mc = new h2d.Sprite();
-		var bg = new h2d.Bitmap(h2d.Tile.fromColor(0xC0000000, 34, 4), mc);
-		new h2d.Bitmap(h2d.Tile.fromColor(0xFFFF0000, 32, 2), mc);
+		var mc = new h2d.Object();
+		var bg = new h2d.Bitmap(h2d.Tile.fromColor(0, 34, 4, 0xC0/255), mc);
+		new h2d.Bitmap(h2d.Tile.fromColor(0xFF0000, 32, 2), mc);
 		bg.x = bg.y = -1;
-		var bar = new h2d.Bitmap(h2d.Tile.fromColor(0xFF00FF00,1,2), mc);
+		var bar = new h2d.Bitmap(h2d.Tile.fromColor(0x00FF00,1,2), mc);
 		var pos = Texts.BUILDPOS(kind);
 
 
@@ -194,7 +194,7 @@ class Building {
 		if( pending != null )
 			return;
 		game.removeDialog();
-		dialog = new h2d.Sprite();
+		dialog = new h2d.Object();
 		actions = [];
 		game.scene.add(dialog, 1);
 		var dimg = new Dialog(50, 50, "", null);
@@ -202,7 +202,7 @@ class Building {
 		var pt = Res.portraits.toTile();
 		var p = new h2d.Anim(dimg);
 		var px = (index >> 3) * 32;
-		p.frames = [pt.sub(px, (index&7) * 16, 16, 16), pt.sub(px + 16, (index&7) * 16, 16, 16)];
+		p.play([pt.sub(px, (index&7) * 16, 16, 16), pt.sub(px + 16, (index&7) * 16, 16, 16)]);
 		p.scale(2);
 		p.x = 8;
 		p.y = 10;

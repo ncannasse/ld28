@@ -8,8 +8,8 @@ class Fight {
 
 	public static var inst : Fight;
 
-	public var root : h2d.Sprite;
-	public var sprites : h2d.Sprite;
+	public var root : h2d.Object;
+	public var sprites : h2d.Object;
 	var level : Int;
 	public var width : Int;
 	public var height : Int;
@@ -24,8 +24,8 @@ class Fight {
 	public function new(level) {
 		inst = this;
 		this.level = level;
-		root = new h2d.Sprite();
-		sprites = new h2d.Sprite();
+		root = new h2d.Object();
+		sprites = new h2d.Object();
 		game = Game.inst;
 		game.fight = this;
 
@@ -39,7 +39,7 @@ class Fight {
 
 		entities = [];
 
-		var bg = new h2d.Bitmap(h2d.Tile.fromColor(0xC0000000, 1000, 1000),root);
+		var bg = new h2d.Bitmap(h2d.Tile.fromColor(0, 1000, 1000, 0xC0/255),root);
 		bg.x = -200;
 		bg.y = -200;
 		var i = new h2d.Interactive(1000, 1000, bg);
@@ -50,7 +50,7 @@ class Fight {
 
 		var t = Res.dungeon.toTile();
 		var tiles = [for( y in 0...t.height >> 4 ) for( x in 0...t.width >> 4 ) t.sub(x * 16, y * 16, 16, 16)];
-		var map = Res.load("level" + level + ".tmx").toTiledMap().toMap();
+		var map = Res.load("level" + level + ".tmx").to(hxd.res.TiledMap).toMap();
 		width = map.width;
 		height = map.height;
 
@@ -96,8 +96,7 @@ class Fight {
 							a.y = y * 16;
 							a.speed = 10;
 							a.colorKey = 0x1D8700;
-							a.frames = game.anims[0];
-							a.currentFrame = Math.random() * a.frames.length;
+							a.play(game.anims[0], Math.random() * a.frames.length);
 							No;
 						case 48,49:
 							var a = new h2d.Anim(root);
@@ -105,8 +104,7 @@ class Fight {
 							a.y = y * 16;
 							a.speed = 10;
 							a.colorKey = 0x1D8700;
-							a.frames = game.anims[4];
-							a.currentFrame = Math.random() * a.frames.length;
+							a.play(game.anims[4], Math.random() * a.frames.length);
 							t == 48 ? Lava : Block;
 						default:
 							throw "COL#" + t;
