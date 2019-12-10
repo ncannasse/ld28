@@ -49,7 +49,7 @@ class Fight {
 		game.scene.add(root, 2);
 
 		var t = Res.dungeon.toTile();
-		var tiles = [for( y in 0...t.height >> 4 ) for( x in 0...t.width >> 4 ) t.sub(x * 16, y * 16, 16, 16)];
+		var tiles = [for( y in 0...Std.int(t.height) >> 4 ) for( x in 0...Std.int(t.width) >> 4 ) t.sub(x * 16, y * 16, 16, 16)];
 		var map = Res.load("level" + level + ".tmx").to(hxd.res.TiledMap).toMap();
 		width = map.width;
 		height = map.height;

@@ -222,7 +222,7 @@ class Game extends hxd.App {
 		var tf = new h2d.Text(font);
 		tf.text = t;
 		tf.dropShadow = { dx : 0, dy : 1, color : 0, alpha : 0.5 };
-		var size =  tf.textWidth + 2 + (icon == null ? 0 : 11);
+		var size = Std.int(tf.textWidth) + 2 + (icon == null ? 0 : 11);
 		var a = new h2d.Bitmap(h2d.Tile.fromColor(0,size,10,0x60/255));
 		a.x = Const.W - size;
 		a.addChild(tf);
@@ -357,7 +357,7 @@ class Game extends hxd.App {
 
 	public static var inst : Game;
 	static function main() {
-		hxd.Res.initEmbed( { compressSounds : true } );
+		hxd.Res.initEmbed();
 		new Title();
 	}
 

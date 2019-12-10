@@ -18,7 +18,7 @@ class World {
 		height = map.height;
 		var t = tiles.toTile();
 		layers = new Map();
-		this.tiles = [for( y in 0...t.height >> 4 ) for( x in 0...t.width >> 4 ) t.sub(x * 16, y * 16, 16, 16)];
+		this.tiles = [for( y in 0...Std.int(t.height) >> 4 ) for( x in 0...Std.int(t.width) >> 4 ) t.sub(x * 16, y * 16, 16, 16)];
 		for( ld in map.layers ) {
 			var l = {
 				name : ld.name,

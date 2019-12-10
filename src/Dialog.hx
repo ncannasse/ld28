@@ -74,7 +74,7 @@ class Dialog extends h2d.Object {
 		return t;
 	}
 
-	function set_width(w) {
+	function set_width(w:Int) {
 		bg.width = w;
 		int.width = w;
 		tf.maxWidth = w - 14;
@@ -82,7 +82,7 @@ class Dialog extends h2d.Object {
 		return width = w;
 	}
 
-	function set_height(h) {
+	function set_height(h:Int) {
 		bg.height = h;
 		int.height = h;
 		return height = h;
